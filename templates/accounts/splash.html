@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QuickBite</title>
+    <link rel="stylesheet" href="{% static 'css/start.css' %}">
+</head>
+<body class="splash-page">
+
+    <div class="splash-container">
+        <div class="logo-icon">🍴</div>
+        <h1>QuickBite</h1>
+    </div>
+
+    <script>
+        setTimeout(function () {
+            window.location.href = "{% url 'onboarding' %}";
+        }, 2500);
+    </script>
+
+</body>
+</html>

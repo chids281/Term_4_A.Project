@@ -1,0 +1,58 @@
+{% load static %}
+<!doctype html>
+<html>
+  <head>
+    <title>Welcome to QuickBite</title>
+    <link rel="stylesheet" href="{% static 'css/start.css' %}" />
+  </head>
+  <body class="onboarding-page">
+    <div class="phone-screen">
+    <button class="back-btn" onclick="prevSlide()" id="backBtn">←</button>
+      <div class="slide active">
+        <img src="{% static 'images/onboarding1.jpg' %}" alt="Choose meal" />
+
+        <div class="slide-text">
+          <h2>Choose your <span class="highlight">meal</span>!</h2>
+          <p>
+            Discover delicious meals from your favorite restaurants in just a
+            few taps.
+          </p>
+        </div>
+      </div>
+
+      <div class="slide">
+        <img src="{% static 'images/onboarding2.jpg' %}" alt="Special offer" />
+
+        <div class="slide-text">
+          <h2>Get special <span class="highlight">offers</span>!</h2>
+          <p>Sign up today and enjoy amazing discounts on your first order.</p>
+        </div>
+      </div>
+
+      <div class="slide">
+        <img src="{% static 'images/onboarding3.jpg' %}" alt="Track order" />
+
+        <div class="slide-text">
+          <h2>Track your <span class="highlight">order!</span></h2>
+          <p>
+            Follow your meal in real time from the kitchen straight to your
+            door.
+          </p>
+        </div>
+      </div>
+
+      <div class="dots">
+        <span class="dot active-dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+
+      <div class="onboarding-buttons">
+        <button onclick="skipOnboarding()">Skip</button>
+        <button onclick="nextSlide()" id="nextBtn">Next</button>
+      </div>
+    </div>
+
+    <script src="{% static 'js/onboarding.js' %}"></script>
+  </body>
+</html>

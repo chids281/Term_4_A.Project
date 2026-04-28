@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome | QuickBite</title>
+    <link rel="stylesheet" href="{% static 'css/auth1.css' %}">
+</head>
+  <body class="auth-page">
+    <div class="auth-container">
+      <div class="auth-left">
+        <h1>Welcome to QuickBite</h1>
+        <p>
+          Fresh meals, fast delivery, and easy ordering from your favorite
+          restaurants.
+        </p>
+      </div>
+
+      <div class="auth-right">
+        <h2>Get Started</h2>
+        <p class="switch-text">Create an account or log in to continue.</p>
+
+        <a href="{% url 'signup' %}" class="auth-link-btn">Sign Up</a>
+        <a href="{% url 'login' %}" class="auth-link-btn outline">Login</a>
+      </div>
+    </div>
+  </body>
+</html>

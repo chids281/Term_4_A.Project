@@ -1,0 +1,158 @@
+{% load static %}
+<!doctype html>
+<html>
+  <head>
+    <title>{{ dish.name }} | QuickBite</title>
+    <link rel="stylesheet" href="{% static 'css/customer.css' %}?v=40" />
+  </head>
+
+  <body class="dish-detail-body">
+    <nav class="top-nav">
+      <div class="logo">🍴 <span>Quick</span>Bite</div>
+
+      <div class="nav-links">
+        <a href="{% url 'customer_dashboard' %}">Home</a>
+        <a href="#">Restaurants</a>
+        <a href="{% url 'orders' %}">Orders</a>
+        <a href="{% url 'cart' %}" class="cart-nav-link">
+          My Cart
+          <span id="cart-count" class="cart-badge">
+            {{ cart_count|default:0 }}
+          </span>
+        </a>
+        <a href="{% url 'profile' %}">Profile</a>
+      </div>
+
+      <div class="nav-user">
+        <span>👤 Hi, {{ user.username }}</span>
+      </div>
+    </nav>
+
+    <main class="dish-page-wrapper">
+      <section class="dish-showcase-card">
+        <div class="dish-image-box">
+          {% if dish.image %}
+          <img src="{{ dish.image.url }}" alt="{{ dish.name }}" />
+          {% else %}
+          <img src="{% static 'images/onboarding1.jpg' %}" alt="Food" />
+          {% endif %}
+        </div>
+
+        <div class="dish-info-box">
+          <span class="meal-tag">Premium Meal</span>
+
+          <h1>{{ dish.name }}</h1>
+
+          <p class="dish-rating">⭐ 4.5 · 20 mins delivery</p>
+
+          {% if dish.restaurant %}
+          <p class="dish-small-text">
+            From <span>{{ dish.restaurant.name }}</span>
+          </p>
+          {% endif %} {% if dish.category %}
+          <p class="dish-small-text">
+            Category: <span>{{ dish.category.name }}</span>
+          </p>
+          {% endif %}
+
+          <h2>₦{{ dish.price }}</h2>
+
+          <p class="dish-description">
+            {{ dish.description|default:"Enjoy a delicious freshly prepared meal
+            from QuickBite. This dish is selected to give you a smooth, tasty
+            and premium food ordering experience." }}
+          </p>
+
+          <div class="dish-buttons">
+            <div class="dish-qty-box">
+              <button type="button" class="dish-qty-btn minus">−</button>
+
+              <span id="dish-qty">
+  {% if cart_item %}
+    {{ cart_item.quantity }}
+  {% else %}
+    0
+  {% endif %}
+</span>
+
+              <button type="button" class="dish-qty-btn plus">+</button>
+            </div>
+
+            <a href="{% url 'cart' %}" class="add-cart-btn"> View Cart </a>
+
+            <a href="{% url 'customer_dashboard' %}" class="back-menu-btn">
+              Back to Menu
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script>
+      function getCookie(name) {
+        let cookieValue = null;
+
+        if (document.cookie && document.cookie !== "") {
+          const cookies = document.cookie.split(";");
+
+          for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+
+            if (cookie.substring(0, name.length + 1) === name + "=") {
+              cookieValue = decodeURIComponent(
+                cookie.substring(name.length + 1),
+              );
+              break;
+            }
+          }
+        }
+
+        return cookieValue;
+      }
+
+      const csrftoken = getCookie("csrftoken");
+
+      const qtyDisplay = document.getElementById("dish-qty");
+      const cartCount = document.getElementById("cart-count");
+
+      document.querySelector(".plus").addEventListener("click", () => {
+        fetch("{% url 'update_dish_cart' dish.id %}", {
+          method: "POST",
+          headers: {
+            "X-CSRFToken": csrftoken,
+            "X-Requested-With": "XMLHttpRequest",
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: "action=increase",
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            qtyDisplay.textContent = data.quantity;
+
+            if (cartCount) {
+              cartCount.textContent = data.cart_count;
+            }
+          });
+      });
+
+      document.querySelector(".minus").addEventListener("click", () => {
+        fetch("{% url 'update_dish_cart' dish.id %}", {
+          method: "POST",
+          headers: {
+            "X-CSRFToken": csrftoken,
+            "X-Requested-With": "XMLHttpRequest",
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: "action=decrease",
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            qtyDisplay.textContent = data.quantity;
+
+            if (cartCount) {
+              cartCount.textContent = data.cart_count;
+            }
+          });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,167 @@
+{% load static %}
+<!doctype html>
+<html>
+  <head>
+    <title>Customer Dashboard | QuickBite</title>
+    <link rel="stylesheet" href="{% static 'css/customer.css' %}?v=30" />
+  </head>
+
+  <body>
+    <nav class="top-nav">
+      <div class="logo">🍴 <span>Quick</span>Bite</div>
+
+      <div class="nav-links">
+        <a href="{% url 'customer_dashboard' %}" class="active">Home</a>
+        <a href="#">Restaurants</a>
+        <a href="{% url 'orders' %}">Orders</a>
+        <a href="{% url 'cart' %}" class="cart-nav-link">
+          My Cart
+          <span id="cart-count" class="cart-badge">
+            {{ cart_count|default:0 }}
+          </span>
+        </a>
+        <a href="{% url 'profile' %}">Profile</a>
+      </div>
+
+      <div class="nav-user">
+        <span>🔔</span>
+        <span>👤 Hi, {{ user.username }}</span>
+      </div>
+    </nav>
+
+    <main class="home-layout">
+      <section class="home-content">
+        <div class="welcome-row">
+          <div>
+            <h1>Hey, {{ user.username }}</h1>
+            <p>What would you like to eat today?</p>
+          </div>
+
+          <form method="GET" class="search-box">
+            <input
+              type="text"
+              name="q"
+              placeholder="Search food or restaurants..."
+              value="{{ request.GET.q }}"
+            />
+            <button type="submit">Search</button>
+          </form>
+        </div>
+
+        <section class="hero-card">
+          <h2>Up to 35% off</h2>
+          <p>Enjoy delicious meals from top restaurants near you.</p>
+          <a href="#popular-items">Order Now</a>
+        </section>
+
+        <div class="section-heading">
+          <h2>Categories</h2>
+          <a href="#">See all</a>
+        </div>
+
+        <div class="categories">
+          {% for category in categories %}
+          <div class="category-card">
+            {% if category.name == "Rice" %}
+            <div class="category-icon">🍚</div>
+            {% elif category.name == "Drinks" %}
+            <div class="category-icon">🥤</div>
+            {% elif category.name == "Pasta" %}
+            <div class="category-icon">🍝</div>
+            {% elif category.name == "Protein" %}
+            <div class="category-icon">🍗</div>
+            {% elif category.name == "Pastries" %}
+            <div class="category-icon">🥐</div>
+            {% else %}
+            <div class="category-icon">🍽️</div>
+            {% endif %}
+            <p>{{ category.name }}</p>
+          </div>
+          {% empty %}
+          <div class="empty-box">No categories available</div>
+          {% endfor %}
+        </div>
+
+        <div class="section-heading" id="popular-items">
+          <h2>Popular Items</h2>
+          <a href="#">See all</a>
+        </div>
+
+        <div class="food-grid">
+          {% for dish in dishes %}
+          <div class="food-card">
+
+            <a href="{% url 'dish_detail' dish.id %}" class="food-image-link">
+              {% if dish.image %}
+              <img src="{{ dish.image.url }}" alt="{{ dish.name }}" />
+              {% else %}
+              <img src="{% static 'images/onboarding1.jpg' %}" alt="Food" />
+              {% endif %}
+            </a>
+
+            <h3 class="food-title">
+              <a href="{% url 'dish_detail' dish.id %}">
+                {{ dish.name }}
+              </a>
+            </h3>
+
+            <p>⭐ 4.5 · 20 mins</p>
+            <strong>₦{{ dish.price }}</strong>
+
+            <a href="{% url 'add_to_cart' dish.id %}" class="add-cart-btn">
+              Add to Cart
+            </a>
+          </div>
+          {% empty %}
+          <div class="empty-box">No dishes found</div>
+          {% endfor %}
+        </div>
+      </section>
+
+      <aside class="profile-panel">
+        <div class="profile-card">
+          <div class="avatar">👤</div>
+          <h2>{{ user.username }}</h2>
+          <p>{{ user.email }}</p>
+          <span>{{ user.role|title }}</span>
+        </div>
+
+        <div class="profile-actions">
+          <a href="{% url 'profile' %}">Edit Profile</a>
+          <a href="#">Change Password</a>
+          <a href="{% url 'orders' %}">My Orders</a>
+          <a href="{% url 'cart' %}">My Cart</a>
+        </div>
+      </aside>
+    </main>
+
+    <script>
+      document.querySelectorAll(".add-cart-btn").forEach((button) => {
+        button.addEventListener("click", function (event) {
+          event.preventDefault();
+
+          fetch(this.href, {
+            method: "GET",
+            headers: {
+              "X-Requested-With": "XMLHttpRequest",
+            },
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.success) {
+                const cartCount = document.getElementById("cart-count");
+                cartCount.textContent = data.cart_count;
+                cartCount.style.display = "inline-flex";
+
+                this.textContent = "Added ✓";
+
+                setTimeout(() => {
+                  this.textContent = "Add to Cart";
+                }, 1000);
+              }
+            });
+        });
+      });
+    </script>
+  </body>
+</html>
