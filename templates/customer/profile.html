@@ -1,1 +1,169 @@
-<h1>Profile Page</h1>
+{% load static %}
+<!doctype html>
+<html>
+<head>
+  <title>Profile | QuickBite</title>
+  <link rel="stylesheet" href="{% static 'css/customer.css' %}?v=120">
+  <link rel="stylesheet" href="{% static 'css/profile.css' %}?v=203">
+</head>
+
+<body class="profile-body">
+
+<nav class="top-nav">
+  <div class="logo">🍴 <span>Quick</span>Bite</div>
+
+  <div class="nav-links">
+    <a href="{% url 'customer_dashboard' %}">Home</a>
+    <a href="#">Restaurants</a>
+    <a href="{% url 'my_orders' %}">Orders</a>
+    <a href="{% url 'cart' %}">My Cart</a>
+    <a href="{% url 'profile' %}" class="active">Profile</a>
+  </div>
+
+  <div class="nav-user">
+    <span>🔔</span>
+    <span>👤 Hi, {{ user.username }}</span>
+  </div>
+</nav>
+
+<main class="profile-page">
+  <section class="profile-dashboard">
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="success-msg">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+
+    <div class="profile-grid">
+
+      <aside class="profile-hero-card">
+        <div class="hero-pattern"></div>
+
+        <div class="avatar big-avatar">
+          {{ user.username|first|upper }}
+        </div>
+
+        <h2>{{ user.username }}</h2>
+        <p>🍽️ QuickBite Customer</p>
+        <span>@{{ user.username }}</span>
+
+        <div class="profile-stats">
+          <div>
+            <strong>{{ total_orders }}</strong>
+            <small>Orders</small>
+          </div>
+
+          <div>
+            <strong>₦{{ total_spent|floatformat:0 }}</strong>
+            <small>Spent</small>
+          </div>
+
+          <div>
+            <strong>★</strong>
+            <small>Customer</small>
+          </div>
+        </div>
+      </aside>
+
+      <section class="profile-main-card">
+        <h2>Account Center</h2>
+
+        <div class="quick-actions">
+
+          <button type="button" class="action-card" onclick="openAddressModal()">
+            <span>📍</span>
+            <div>
+              <h3>Manage Address</h3>
+              <p>{{ user.address|default:"Add or update delivery locations" }}</p>
+            </div>
+            <b>›</b>
+          </button>
+
+          <a href="{% url 'payment' %}" class="action-card">
+            <span>💳</span>
+            <div>
+              <h3>Payment</h3>
+              <p>Manage cards and payment method</p>
+            </div>
+            <b>›</b>
+          </a>
+
+          <a href="{% url 'my_orders' %}" class="action-card">
+            <span>🛍️</span>
+            <div>
+              <h3>Orders</h3>
+              <p>Track your recent food orders</p>
+            </div>
+            <b>›</b>
+          </a>
+
+          <a href="{% url 'offers' %}" class="action-card">
+            <span>🏷️</span>
+            <div>
+              <h3>Offers</h3>
+              <p>Coupons and QuickBite discounts</p>
+            </div>
+            <b>›</b>
+          </a>
+
+          <a href="{% url 'help_center' %}" class="action-card help-card">
+            <span>☎️</span>
+            <div>
+              <h3>Help Center</h3>
+              <p>Contact support for assistance</p>
+            </div>
+            <b>›</b>
+          </a>
+
+        </div>
+
+        <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
+      </section>
+
+    </div>
+  </section>
+</main>
+
+<div class="address-modal" id="addressModal">
+  <div class="address-modal-card">
+    <button class="close-modal" type="button" onclick="closeAddressModal()">×</button>
+
+    <h2>Manage Address</h2>
+    <p>Update your delivery address and phone number.</p>
+
+    <form method="POST">
+      {% csrf_token %}
+
+      <label>Phone Number</label>
+      <input
+        type="text"
+        name="phone"
+        value="{{ user.phone }}"
+        placeholder="Enter your phone number"
+      >
+
+      <label>Delivery Address</label>
+      <textarea
+        name="address"
+        rows="4"
+        placeholder="Enter your delivery address"
+      >{{ user.address }}</textarea>
+
+      <button type="submit">Save Changes</button>
+    </form>
+  </div>
+</div>
+
+<script>
+function openAddressModal() {
+  document.getElementById("addressModal").classList.add("show");
+}
+
+function closeAddressModal() {
+  document.getElementById("addressModal").classList.remove("show");
+}
+</script>
+
+</body>
+</html>

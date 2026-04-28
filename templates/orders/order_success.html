@@ -1,0 +1,23 @@
+{% load static %}
+<!doctype html>
+<html>
+<head>
+  <title>Order Placed | QuickBite</title>
+  <link rel="stylesheet" href="{% static 'css/customer.css' %}">
+</head>
+
+<body class="cart-body">
+
+<div style="display:flex; justify-content:center; align-items:center; height:100vh;">
+  <div style="background:white; padding:40px; border-radius:20px; text-align:center;">
+    <h1>✅ Order Successful!</h1>
+    <p>Your food is on the way 🚀</p>
+
+    <a href="{% url 'customer_dashboard' %}" class="add-cart-btn">
+      Back to Home
+    </a>
+  </div>
+</div>
+
+</body>
+</html>

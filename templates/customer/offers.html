@@ -1,0 +1,64 @@
+{% load static %}
+<!doctype html>
+<html>
+<head>
+  <title>Offers | QuickBite</title>
+  <link rel="stylesheet" href="{% static 'css/customer.css' %}?v=120">
+  <link rel="stylesheet" href="{% static 'css/profile_pages.css' %}?v=1">
+</head>
+
+<body class="profile-sub-body">
+
+<nav class="top-nav">
+  <div class="logo">🍴 <span>Quick</span>Bite</div>
+
+  <div class="nav-links">
+    <a href="{% url 'customer_dashboard' %}">Home</a>
+    <a href="#">Restaurants</a>
+    <a href="{% url 'my_orders' %}">Orders</a>
+    <a href="{% url 'cart' %}">My Cart</a>
+    <a href="{% url 'profile' %}" class="active">Profile</a>
+  </div>
+
+  <div class="nav-user">
+    <span>🔔</span>
+    <span>👤 Hi, {{ user.username }}</span>
+  </div>
+</nav>
+
+<main class="sub-page">
+  <section class="sub-card">
+    <a href="{% url 'profile' %}" class="back-link">← Back to Profile</a>
+
+    <div class="sub-header">
+      <div>
+        <h1>Offers</h1>
+        <p>Available discounts and QuickBite coupons.</p>
+      </div>
+      <span class="sub-icon">🏷️</span>
+    </div>
+
+    <div class="offers-grid">
+      <div class="offer-card">
+        <h2>WELCOME10</h2>
+        <p>Get 10% off your next order.</p>
+        <span>Use at checkout</span>
+      </div>
+
+      <div class="offer-card">
+        <h2>FREEDEL</h2>
+        <p>Free delivery on orders above ₦15,000.</p>
+        <span>Limited time</span>
+      </div>
+
+      <div class="offer-card">
+        <h2>QUICKBITE5</h2>
+        <p>Save ₦500 on selected meals.</p>
+        <span>New users only</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+</body>
+</html>

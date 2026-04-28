@@ -13,7 +13,7 @@
       <div class="nav-links">
         <a href="{% url 'customer_dashboard' %}" class="active">Home</a>
         <a href="#">Restaurants</a>
-        <a href="{% url 'orders' %}">Orders</a>
+        <a href="{% url 'my_orders' %}">Orders</a>
         <a href="{% url 'cart' %}" class="cart-nav-link">
           My Cart
           <span id="cart-count" class="cart-badge">
@@ -61,25 +61,26 @@
 
         <div class="categories">
           {% for category in categories %}
-          <div class="category-card">
-            {% if category.name == "Rice" %}
-            <div class="category-icon">🍚</div>
-            {% elif category.name == "Drinks" %}
-            <div class="category-icon">🥤</div>
-            {% elif category.name == "Pasta" %}
-            <div class="category-icon">🍝</div>
-            {% elif category.name == "Protein" %}
-            <div class="category-icon">🍗</div>
-            {% elif category.name == "Pastries" %}
-            <div class="category-icon">🥐</div>
-            {% else %}
-            <div class="category-icon">🍽️</div>
-            {% endif %}
-            <p>{{ category.name }}</p>
-          </div>
-          {% empty %}
-          <div class="empty-box">No categories available</div>
-          {% endfor %}
+            <a href="{% url 'category_dishes' category.id %}" class="category-card">
+              <span>
+                {% if category.name == "Rice" %}
+                  🍚
+                {% elif category.name == "Pasta" %}
+                  🍝
+                {% elif category.name == "Protein" %}
+                  🍗
+                {% elif category.name == "Pastries" %}
+                  🥐
+                {% elif category.name == "Drinks" %}
+                  🥤
+                {% else %}
+                  🍽️
+                {% endif %}
+              </span>
+
+              <h3>{{ category.name }}</h3>
+            </a>
+            {% endfor %}
         </div>
 
         <div class="section-heading" id="popular-items">

@@ -1,0 +1,195 @@
+.profile-sub-body {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 12% 85%, rgba(255, 184, 112, 0.35) 0 180px, transparent 181px),
+        radial-gradient(circle at 85% 18%, rgba(255, 184, 112, 0.28) 0 210px, transparent 211px),
+        linear-gradient(135deg, #ff3d00, #ff6a00);
+}
+
+.sub-page {
+    padding: 55px 70px;
+}
+
+.sub-card {
+    max-width: 1050px;
+    margin: auto;
+    background: #fff7f2;
+    border-radius: 34px;
+    padding: 44px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.18);
+    position: relative;
+    overflow: hidden;
+}
+
+.sub-card::before {
+    content: "";
+    position: absolute;
+    width: 330px;
+    height: 330px;
+    border-radius: 50%;
+    background: rgba(255, 118, 48, 0.15);
+    top: -130px;
+    right: -90px;
+}
+
+.sub-card::after {
+    content: "";
+    position: absolute;
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    background: rgba(255, 187, 130, 0.25);
+    bottom: -120px;
+    left: -90px;
+}
+
+.sub-card > * {
+    position: relative;
+    z-index: 2;
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 28px;
+    background: white;
+    color: #ff3d00;
+    padding: 12px 18px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 900;
+}
+
+.sub-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+}
+
+.sub-header h1 {
+    font-size: 46px;
+    margin: 0;
+    color: #111;
+}
+
+.sub-header h1 span {
+    color: #ff3d00;
+}
+
+.sub-header p {
+    color: #666;
+    margin-top: 8px;
+    font-size: 17px;
+}
+
+.sub-icon {
+    width: 95px;
+    height: 95px;
+    border-radius: 30px;
+    background: linear-gradient(135deg, #ff3d00, #ff8a50);
+    display: grid;
+    place-items: center;
+    font-size: 42px;
+    box-shadow: 0 20px 40px rgba(255, 61, 0, 0.28);
+}
+
+.payment-card,
+.offer-card,
+.help-item {
+    background: white;
+    border-radius: 26px;
+    padding: 28px;
+    margin-bottom: 18px;
+    border: 1px solid #ffe0d2;
+    box-shadow: 0 18px 45px rgba(255, 61, 0, 0.08);
+}
+
+.payment-card h2,
+.offer-card h2,
+.help-item h3 {
+    margin: 0 0 8px;
+    color: #111;
+}
+
+.payment-card p,
+.offer-card p,
+.help-item p {
+    color: #777;
+    margin: 5px 0;
+}
+
+.active-badge,
+.soon-badge,
+.offer-card span {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-weight: 900;
+}
+
+.active-badge {
+    background: #e8fff1;
+    color: #0f9d58;
+}
+
+.soon-badge,
+.offer-card span {
+    background: #fff1eb;
+    color: #ff3d00;
+}
+
+.offers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.offer-card {
+    margin-bottom: 0;
+}
+
+.offer-card h2 {
+    color: #ff3d00;
+}
+
+.help-list {
+    display: grid;
+    gap: 18px;
+}
+
+.payment-card:hover,
+.offer-card:hover,
+.help-item:hover {
+    transform: translateY(-5px);
+    transition: 0.25s ease;
+}
+
+@media (max-width: 800px) {
+    .sub-page {
+        padding: 30px 18px;
+    }
+
+    .sub-card {
+        padding: 28px;
+    }
+
+    .sub-header {
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .sub-header h1 {
+        font-size: 34px;
+    }
+
+    .sub-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 30px;
+    }
+
+    .offers-grid {
+        grid-template-columns: 1fr;
+    }
+}

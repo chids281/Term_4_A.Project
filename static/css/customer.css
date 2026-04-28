@@ -578,7 +578,35 @@ body {
   min-width: 25px;
   text-align: center;
 }
+.category-card {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
 
+.category-card:hover {
+    transform: translateY(-5px);
+    border-color: #ff3d00;
+}
+.categories a,
+.categories a:hover,
+.categories a:visited,
+.categories a:active,
+.category-card,
+.category-card:hover,
+.category-card:visited,
+.category-card:active,
+.category-card *,
+.category-card *:hover {
+  text-decoration: none !important;
+  color: inherit !important;
+}
+
+.category-card p,
+.category-card h3 {
+  color: #111 !important;
+  text-decoration: none !important;
+}
 @media (max-width: 900px) {
   .dish-showcase-card {
     grid-template-columns: 1fr;

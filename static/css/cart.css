@@ -235,15 +235,17 @@
 }
 
 .checkout-btn {
+  margin-top: 15px;
   width: 100%;
-  padding: 18px;
   background: #ff4b00;
-  color: white;
-  border: none;
+  padding: 17px;
+  display: block;
+  text-align: center;
+  border: 1px solid #ff4b00;
+  color: #fefdfd;
   border-radius: 13px;
+  text-decoration: none;
   font-weight: 900;
-  font-size: 16px;
-  cursor: pointer;
 }
 
 .clear-cart-btn {

@@ -3,7 +3,12 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from restaurant.models import Dish
-from .models import Cart, CartItem
+from .models import Cart, CartItem, Order, OrderItem
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from .models import Order
+from django.utils import timezone
+from datetime import timedelta
 
 
 DELIVERY_FEE = 1000
@@ -188,4 +193,108 @@ def update_dish_cart(request, dish_id):
         "quantity": quantity,
         "item_total": item_total,
         "cart_count": cart_count,
+    })
+
+@login_required
+def checkout_view(request):
+    cart, _ = Cart.objects.get_or_create(user=request.user)
+    cart_items = CartItem.objects.filter(cart=cart)
+
+    subtotal = sum(item.subtotal() for item in cart_items)
+    delivery_fee = 1000
+    total = subtotal + delivery_fee if subtotal > 0 else 0
+
+    if request.method == "POST":
+        if not cart_items:
+            return redirect("cart")
+
+        full_name = request.POST.get("full_name")
+        phone = request.POST.get("phone")
+        address = request.POST.get("address")
+        note = request.POST.get("note")
+        payment_method = request.POST.get("payment_method")
+
+        order = Order.objects.create(
+            user=request.user,
+            full_name=full_name,
+            phone=phone,
+            address=address,
+            note=note,
+            subtotal=subtotal,
+            delivery_fee=delivery_fee,
+            total=total,
+            payment_method=payment_method,
+        )
+
+        for item in cart_items:
+            OrderItem.objects.create(
+                order=order,
+                dish=item.dish,
+                quantity=item.quantity,
+                price=item.dish.price
+            )
+
+        # clear cart
+        cart_items.delete()
+
+        if request.headers.get("x-requested-with") == "XMLHttpRequest":
+         return JsonResponse({
+        "success": True,
+        "message": "Order placed successfully!"
+    })
+
+        return redirect("order_success")
+
+    return render(request, "orders/checkout.html", {
+        "cart_items": cart_items,
+        "subtotal": subtotal,
+        "delivery_fee": delivery_fee,
+        "total": total,
+    })
+@login_required
+def order_success(request):
+    return render(request, "orders/order_success.html")
+
+@login_required
+def my_orders(request):
+    orders = Order.objects.filter(user=request.user).order_by("-created_at")
+
+    for order in orders:
+        update_order_status(order)
+
+    return render(request, "orders/my_orders.html", {
+        "orders": orders
+    })
+@login_required
+def delete_order(request, order_id):
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+
+    if request.method == "POST":
+        order.delete()
+
+    return redirect("my_orders")
+
+def update_order_status(order):
+    time_passed = timezone.now() - order.created_at
+
+    if time_passed >= timedelta(minutes=10):
+        order.status = "delivered"
+    elif time_passed >= timedelta(minutes=6):
+        order.status = "on_the_way"
+    elif time_passed >= timedelta(minutes=3):
+        order.status = "preparing"
+    else:
+        order.status = "confirmed"
+
+    order.save()
+
+@login_required
+def live_order_status(request, order_id):
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+
+    update_order_status(order)
+
+    return JsonResponse({
+        "status": order.status,
+        "status_display": order.get_status_display(),
     })

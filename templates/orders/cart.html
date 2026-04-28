@@ -15,7 +15,7 @@
   <div class="nav-links">
     <a href="{% url 'customer_dashboard' %}">Home</a>
     <a href="#">Restaurants</a>
-    <a href="{% url 'orders' %}">Orders</a>
+            <a href="{% url 'my_orders' %}">Orders</a>
     <a href="{% url 'cart' %}" class="active">My Cart</a>
     <a href="{% url 'profile' %}">Profile</a>
   </div>
@@ -136,7 +136,9 @@
       🏷️ You may get free delivery on special offers!
     </div>
 
-    <button class="checkout-btn">Proceed to Checkout ></button>
+<a href="{% url 'checkout' %}" class="checkout-btn">
+  Proceed to Checkout &gt;
+</a>
 
     <a href="{% url 'customer_dashboard' %}" class="clear-cart-btn">
       Add More Food

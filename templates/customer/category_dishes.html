@@ -1,0 +1,105 @@
+{% load static %}
+<!doctype html>
+<html>
+<head>
+  <title>{{ category.name }} | QuickBite</title>
+  <link rel="stylesheet" href="{% static 'css/customer.css' %}?v=130">
+  <link rel="stylesheet" href="{% static 'css/category.css' %}?v=3">
+</head>
+
+<body class="category-body">
+
+<nav class="top-nav">
+  <div class="logo">🍴 <span>Quick</span>Bite</div>
+
+  <div class="nav-links">
+    <a href="{% url 'customer_dashboard' %}">Home</a>
+    <a href="#">Restaurants</a>
+    <a href="{% url 'my_orders' %}">Orders</a>
+    <a href="{% url 'cart' %}">My Cart</a>
+    <a href="{% url 'profile' %}">Profile</a>
+  </div>
+
+  <div class="nav-user">
+    <span>🔔</span>
+    <span>👤 Hi, {{ user.username }}</span>
+  </div>
+</nav>
+
+<main class="category-page">
+
+  <section class="category-hero">
+    <div>
+      <a href="{% url 'customer_dashboard' %}" class="back-btn">← Back</a>
+      <h1>{{ category.name }}</h1>
+      <p>Explore all available meals under {{ category.name }}.</p>
+    </div>
+
+    <div class="category-icon-big">
+      {% if category.name == "Rice" %}
+        🍚
+      {% elif category.name == "Pasta" %}
+        🍝
+      {% elif category.name == "Protein" %}
+        🍗
+      {% elif category.name == "Pastries" %}
+        🥐
+      {% elif category.name == "Drinks" %}
+        🥤
+      {% else %}
+        🍽️
+      {% endif %}
+    </div>
+  </section>
+
+  <section class="category-food-section">
+    <div class="section-title">
+      <h2>{{ category.name }} Meals</h2>
+      <p>{{ dishes.count }} item{{ dishes.count|pluralize }} found</p>
+    </div>
+
+    {% if dishes %}
+    <div class="category-food-grid">
+
+      {% for dish in dishes %}
+      <div class="category-food-card">
+
+        {% if dish.image %}
+          <img src="{{ dish.image.url }}" alt="{{ dish.name }}">
+        {% else %}
+          <div class="food-placeholder">🍽️</div>
+        {% endif %}
+
+        <div class="food-info">
+          <h3>{{ dish.name }}</h3>
+          <p>{{ dish.description|truncatewords:12 }}</p>
+
+          <div class="food-meta">
+            <span>⭐ 4.5</span>
+            <span>20 mins</span>
+          </div>
+
+          <div class="food-bottom">
+            <strong>₦{{ dish.price }}</strong>
+            <a href="{% url 'dish_detail' dish.id %}" class="view-btn">View Meal</a>
+          </div>
+        </div>
+
+      </div>
+      {% endfor %}
+
+    </div>
+    {% else %}
+    <div class="empty-category">
+      <div>🍽️</div>
+      <h2>No food found</h2>
+      <p>There are no meals in this category yet.</p>
+      <a href="{% url 'customer_dashboard' %}">Go Back Home</a>
+    </div>
+    {% endif %}
+  </section>
+
+</main>
+
+</body>
+</html>

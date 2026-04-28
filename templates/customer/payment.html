@@ -1,0 +1,56 @@
+{% load static %}
+<!doctype html>
+<html>
+<head>
+  <title>Payment | QuickBite</title>
+  <link rel="stylesheet" href="{% static 'css/customer.css' %}?v=120">
+  <link rel="stylesheet" href="{% static 'css/profile_pages.css' %}?v=1">
+</head>
+
+<body class="profile-sub-body">
+
+<nav class="top-nav">
+  <div class="logo">🍴 <span>Quick</span>Bite</div>
+
+  <div class="nav-links">
+    <a href="{% url 'customer_dashboard' %}">Home</a>
+    <a href="#">Restaurants</a>
+    <a href="{% url 'my_orders' %}">Orders</a>
+    <a href="{% url 'cart' %}">My Cart</a>
+    <a href="{% url 'profile' %}" class="active">Profile</a>
+  </div>
+
+  <div class="nav-user">
+    <span>🔔</span>
+    <span>👤 Hi, {{ user.username }}</span>
+  </div>
+</nav>
+
+<main class="sub-page">
+  <section class="sub-card">
+    <a href="{% url 'profile' %}" class="back-link">← Back to Profile</a>
+
+    <div class="sub-header">
+      <div>
+        <h1>Payment</h1>
+        <p>Manage your QuickBite payment options.</p>
+      </div>
+      <span class="sub-icon">💳</span>
+    </div>
+
+    <div class="payment-card">
+      <h2>Cash on Delivery</h2>
+      <p>Pay when your food arrives at your doorstep.</p>
+      <span class="active-badge">Active</span>
+    </div>
+
+    <div class="payment-card muted">
+      <h2>Card Payment</h2>
+      <p>Online card payment will be available soon.</p>
+      <span class="soon-badge">Coming Soon</span>
+    </div>
+  </section>
+</main>
+
+</body>
+</html>
