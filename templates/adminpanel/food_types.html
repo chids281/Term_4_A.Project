@@ -1,0 +1,41 @@
+{% extends 'adminpanel/base.html' %}
+{% block title %}Food Types{% endblock %}
+{% block page_title %}Food Types{% endblock %}
+ 
+{% block content %}
+<div style="display:flex; gap:12px; margin-bottom:24px; flex-wrap:wrap;">
+    {% for ft in food_type_choices %}
+    <div style="background:var(--white); border-radius:12px; padding:14px 22px; box-shadow:var(--shadow); font-weight:600; font-size:0.88rem; border-left:4px solid var(--coral); color:var(--text-dark);">
+        {{ ft }}
+    </div>
+    {% endfor %}
+</div>
+ 
+<div class="card">
+    <div class="card-title">All Dishes</div>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Dish Name</th>
+                <th>Category</th>
+                <th>Restaurant</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for dish in dishes %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td><strong>{{ dish.name }}</strong></td>
+                <td><span class="badge badge-cat">{{ dish.category.name|default:"Uncategorized" }}</span></td>
+                <td>{{ dish.restaurant.name|default:"—" }}</td>
+                <td><strong>${{ dish.price }}</strong></td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5" style="text-align:center; color:#aaa; padding:24px;">No dishes found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
