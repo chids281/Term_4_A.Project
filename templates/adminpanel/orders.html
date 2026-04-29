@@ -1,0 +1,47 @@
+{% extends 'adminpanel/base.html' %}
+{% block title %}Orders{% endblock %}
+{% block page_title %}Customer Orders{% endblock %}
+ 
+{% block content %}
+<div class="card">
+    <div class="card-title">All Customer Orders</div>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Customer</th>
+                <th>Items</th>
+                <th>Total</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cart in carts %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td><strong>{{ cart.user.username }}</strong></td>
+                <td>
+                    {% for item in cart.items.all %}
+                        <span style="background:var(--coral-pale); color:var(--coral-dark); padding:3px 8px; border-radius:20px; font-size:0.75rem; font-weight:600; margin-right:4px;">
+                            {{ item.dish.name }} x{{ item.quantity }}
+                        </span>
+                    {% empty %}
+                        <span style="color:#aaa;">Empty cart</span>
+                    {% endfor %}
+                </td>
+                <td><strong>${{ cart.total_price }}</strong></td>
+                <td>
+                    {% if cart.items.count > 0 %}
+                    <span class="badge badge-pending">Pending</span>
+                    {% else %}
+                    <span class="badge badge-empty">Empty</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5" style="text-align:center; color:#aaa; padding:24px;">No orders found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

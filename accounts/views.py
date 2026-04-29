@@ -21,7 +21,7 @@ def redirect_user_by_role(user):
     elif user.role == 'owner':
         return redirect('owner_dashboard')
     elif user.role == 'admin':
-        return redirect('admin_dashboard')
+        return redirect('adminpanel:dashboard')
     return redirect('auth_choice')
 
 
@@ -31,6 +31,9 @@ def signup_view(request):
 
         if form.is_valid():
             user = form.save()
+            if user.role == 'admin':
+               user.is_staff = True
+               user.save()
             login(request, user)
             return redirect_user_by_role(user)
     else:

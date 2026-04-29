@@ -1,0 +1,49 @@
+{% extends 'adminpanel/base.html' %}
+{% block title %}Categories{% endblock %}
+{% block page_title %}Categories{% endblock %}
+ 
+{% block content %}
+<div class="split-layout">
+    <div class="card">
+        <div class="card-title">Add New Category</div>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label class="form-label">Category Name</label>
+                <input type="text" name="name" class="form-control" placeholder="e.g. Fast Food" required>
+            </div>
+            <button type="submit" class="btn btn-primary">+ Add Category</button>
+        </form>
+    </div>
+ 
+    <div class="card">
+        <div class="card-title">All Categories ({{ categories|length }})</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cat in categories %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td><strong>{{ cat.name }}</strong></td>
+                    <td>
+                        <a href="{% url 'adminpanel:delete_category' cat.pk %}"
+                           class="btn btn-outline"
+                           onclick="return confirm('Delete \'{{ cat.name }}\'?')">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="3" style="text-align:center; color:#aaa; padding:24px;">No categories yet.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
