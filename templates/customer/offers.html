@@ -2,84 +2,60 @@
 <!doctype html>
 <html>
 <head>
-  <!-- Page title -->
   <title>Offers | QuickBite</title>
-
-  <!-- Main styles -->
   <link rel="stylesheet" href="{% static 'css/customer.css' %}?v=120">
-
-  <!-- Profile sub-pages styling -->
   <link rel="stylesheet" href="{% static 'css/profile_pages.css' %}?v=1">
 </head>
 
 <body class="profile-sub-body">
 
-<!-- ================= NAVBAR ================= -->
 <nav class="top-nav">
-
-  <!-- Logo -->
   <div class="logo">🍴 <span>Quick</span>Bite</div>
 
-  <!-- Navigation -->
   <div class="nav-links">
     <a href="{% url 'customer_dashboard' %}">Home</a>
-    <a href="#">Restaurants</a> <!-- not linked yet -->
+    <a href="#">Restaurants</a>
     <a href="{% url 'my_orders' %}">Orders</a>
     <a href="{% url 'cart' %}">My Cart</a>
     <a href="{% url 'profile' %}" class="active">Profile</a>
   </div>
 
-  <!-- User info -->
   <div class="nav-user">
     <span>🔔</span>
     <span>👤 Hi, {{ user.username }}</span>
   </div>
 </nav>
 
-<!-- ================= MAIN PAGE ================= -->
 <main class="sub-page">
-
-  <!-- Main card -->
   <section class="sub-card">
-
-    <!-- Back button -->
     <a href="{% url 'profile' %}" class="back-link">← Back to Profile</a>
 
-    <!-- Header -->
     <div class="sub-header">
       <div>
         <h1>Offers</h1>
         <p>Available discounts and QuickBite coupons.</p>
       </div>
-
-      <!-- Icon -->
       <span class="sub-icon">🏷️</span>
     </div>
 
-    <!-- Offers grid -->
     <div class="offers-grid">
-
-      <!-- Offer 1 -->
       <div class="offer-card">
         <h2>WELCOME10</h2>
         <p>Get 10% off your next order.</p>
         <span>Use at checkout</span>
       </div>
 
-      <!-- Offer 2 -->
       <div class="offer-card">
         <h2>FREEDEL</h2>
         <p>Free delivery on orders above ₦15,000.</p>
         <span>Limited time</span>
       </div>
 
-      <!-- Offer 3 -->
       <div class="offer-card">
         <h2>QUICKBITE5</h2>
         <p>Save ₦500 on selected meals.</p>
         <span>New users only</span>
       </div>
-
     </div>
   </section>
 </main>

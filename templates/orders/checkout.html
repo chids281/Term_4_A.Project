@@ -1,266 +1,187 @@
 {% load static %}
 <!doctype html>
 <html>
-<head>
-  <!-- Page title -->
-  <title>Checkout | QuickBite</title>
+  <head>
+    <title>Checkout | QuickBite</title>
+    <link rel="stylesheet" href="{% static 'css/customer.css' %}?v=80" />
+    <link rel="stylesheet" href="{% static 'css/checkout.css' %}?v=80" />
+  </head>
 
-  <!-- Main styles -->
-  <link rel="stylesheet" href="{% static 'css/customer.css' %}?v=80" />
-  <link rel="stylesheet" href="{% static 'css/checkout.css' %}?v=80" />
-</head>
+  <body class="checkout-body">
+    <nav class="top-nav">
+      <div class="logo">🍴 <span>Quick</span>Bite</div>
 
-<body class="checkout-body">
+      <div class="nav-links">
+        <a href="{% url 'customer_dashboard' %}">Home</a>
+        <a href="#">Restaurants</a>
+        <a href="{% url 'orders' %}">Orders</a>
+        <a href="{% url 'cart' %}">My Cart</a>
+        <a href="{% url 'profile' %}">Profile</a>
+      </div>
 
-<!-- ================= NAVBAR ================= -->
-<nav class="top-nav">
-  <div class="logo">🍴 <span>Quick</span>Bite</div>
+      <div class="nav-user">
+        <span>🔔</span>
+        <span>👤 Hi, {{ user.username }}</span>
+      </div>
+    </nav>
 
-  <div class="nav-links">
-    <a href="{% url 'customer_dashboard' %}">Home</a>
+    <main class="checkout-page">
+      <section class="checkout-left">
+        <div class="checkout-header">
+          <h1>Checkout</h1>
+          <p>Confirm your delivery details and place your order.</p>
+        </div>
 
-    <!-- TODO: replace with real restaurants page -->
-    <a href="#">Restaurants</a>
+        <form method="post" class="checkout-form">
+          {% csrf_token %}
 
-    <a href="{% url 'orders' %}">Orders</a>
-    <a href="{% url 'cart' %}">My Cart</a>
-    <a href="{% url 'profile' %}">Profile</a>
-  </div>
+          <div class="checkout-card">
+            <h2>Delivery Information</h2>
 
-  <!-- Logged-in user -->
-  <div class="nav-user">
-    <span>🔔</span>
-    <span>👤 Hi, {{ user.username }}</span>
-  </div>
-</nav>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Full Name</label>
+                <input
+                  type="text"
+                  name="full_name"
+                  value="{{ user.username }}"
+                  required
+                />
+              </div>
 
-<!-- ================= MAIN ================= -->
-<main class="checkout-page">
+              <div class="form-group">
+                <label>Phone Number</label>
+                <input
+                  type="text"
+                  name="phone"
+                  placeholder="Enter phone number"
+                  required
+                />
+              </div>
+            </div>
 
-  <!-- LEFT SIDE (FORM) -->
-  <section class="checkout-left">
+            <div class="form-group">
+              <label>Delivery Address</label>
+              <textarea
+                name="address"
+                rows="4"
+                placeholder="Enter your delivery address"
+                required
+              ></textarea>
+            </div>
 
-    <!-- Header -->
-    <div class="checkout-header">
-      <h1>Checkout</h1>
-      <p>Confirm your delivery details and place your order.</p>
-    </div>
-
-    <!-- Checkout form -->
-    <form method="post" class="checkout-form">
-      {% csrf_token %}
-
-      <!-- DELIVERY INFO -->
-      <div class="checkout-card">
-        <h2>Delivery Information</h2>
-
-        <div class="form-grid">
-
-          <!-- Full name -->
-          <div class="form-group">
-            <label>Full Name</label>
-            <input
-              type="text"
-              name="full_name"
-              value="{{ user.get_full_name|default:user.username }}"
-              required
-            />
+            <div class="form-group">
+              <label>Extra Note</label>
+              <textarea
+                name="note"
+                rows="3"
+                placeholder="Example: Please call when you arrive"
+              ></textarea>
+            </div>
           </div>
 
-          <!-- Phone -->
-          <div class="form-group">
-            <label>Phone Number</label>
-            <input
-              type="text"
-              name="phone"
-              value="{{ user.phone }}"
-              placeholder="Enter phone number"
-              required
-            />
+          <div class="checkout-card">
+            <h2>Payment Method</h2>
+
+            <label class="payment-option">
+              <input type="radio" name="payment_method" value="cash" checked />
+              <span>
+                <strong>Cash on Delivery</strong>
+                <small>Pay when your food arrives.</small>
+              </span>
+            </label>
+
+            <label class="payment-option">
+              <input type="radio" name="payment_method" value="card" />
+              <span>
+                <strong>Card Payment</strong>
+                <small>Pay online with your debit card.</small>
+              </span>
+            </label>
           </div>
 
+          <button type="submit" class="place-order-btn">Place Order</button>
+        </form>
+      </section>
+
+      <aside class="checkout-summary">
+        <div class="summary-top">
+          <h2>Order Summary</h2>
+          <div class="summary-icon">🧾</div>
         </div>
 
-        <!-- Address -->
-        <div class="form-group">
-          <label>Delivery Address</label>
-          <textarea
-            name="address"
-            rows="4"
-            placeholder="Enter your delivery address"
-            required
-          >{{ user.address }}</textarea>
-        </div>
+        <div class="summary-body">
+          {% if cart_items %}
+          <div class="checkout-items">
+            {% for item in cart_items %}
+            <div class="checkout-item">
+              <div>
+                <h3>{{ item.dish.name }}</h3>
+                <p>Qty: {{ item.quantity }}</p>
+              </div>
+              <strong>₦{{ item.subtotal }}</strong>
+            </div>
+            {% endfor %}
+          </div>
+          {% else %}
+          <p class="empty-checkout">No items in your cart.</p>
+          {% endif %}
 
-        <!-- Optional note -->
-        <div class="form-group">
-          <label>Extra Note</label>
-          <textarea
-            name="note"
-            rows="3"
-            placeholder="Example: Please call when you arrive"
-          ></textarea>
-        </div>
-      </div>
+          <hr />
 
-      <!-- PAYMENT METHOD -->
-      <div class="checkout-card">
-        <h2>Payment Method</h2>
-
-        <!-- Cash option -->
-        <label class="payment-option">
-          <input type="radio" name="payment_method" value="cash" checked />
-          <span>
-            <strong>Cash on Delivery</strong>
-            <small>Pay when your food arrives.</small>
-          </span>
-        </label>
-
-        <!-- Card option -->
-        <label class="payment-option">
-          <input type="radio" name="payment_method" value="card" />
-          <span>
-            <strong>Card Payment</strong>
-            <small>Pay online with your debit card.</small>
-          </span>
-        </label>
-      </div>
-
-      <!-- Submit button -->
-      <button type="submit" class="place-order-btn">
-        Place Order
-      </button>
-    </form>
-  </section>
-
-  <!-- ================= RIGHT SIDE (SUMMARY) ================= -->
-  <aside class="checkout-summary">
-
-    <div class="summary-top">
-      <h2>Order Summary</h2>
-      <div class="summary-icon">🧾</div>
-    </div>
-
-    <div class="summary-body">
-
-      <!-- Cart items -->
-      {% if cart_items %}
-      <div class="checkout-items">
-
-        {% for item in cart_items %}
-        <div class="checkout-item">
-          <div>
-            <h3>{{ item.dish.name }}</h3>
-            <p>Qty: {{ item.quantity }}</p>
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <strong>₦{{ subtotal|default:0 }}</strong>
           </div>
 
-          <!-- Item subtotal -->
-          <strong>₦{{ item.subtotal }}</strong>
+          <div class="summary-row">
+            <span>Delivery Fee</span>
+            <strong>₦{{ delivery_fee|default:0 }}</strong>
+          </div>
+
+          <div class="summary-row total-row">
+            <span>Total</span>
+            <strong>₦{{ total|default:0 }}</strong>
+          </div>
+
+          <a href="{% url 'cart' %}" class="back-cart-btn"> Back to Cart </a>
         </div>
-        {% endfor %}
+      </aside>
+    </main>
+    <div class="success-modal" id="successModal">
+      <div class="success-modal-card">
+        <div class="success-icon">✅</div>
+        <h2>Order Successful!</h2>
+        <p>Your food is on the way. Thank you for ordering with QuickBite.</p>
 
+        <a href="{% url 'customer_dashboard' %}" class="success-btn">
+          Back to Home
+        </a>
       </div>
-      {% else %}
-      <p class="empty-checkout">No items in your cart.</p>
-      {% endif %}
-
-      <hr />
-
-      <!-- Subtotal -->
-      <div class="summary-row">
-        <span>Subtotal</span>
-        <strong>₦{{ subtotal|default:0 }}</strong>
-      </div>
-
-      <!-- Delivery -->
-      <div class="summary-row">
-        <span>Delivery Fee</span>
-        <strong>₦{{ delivery_fee|default:1000 }}</strong>
-      </div>
-
-      <!-- Total -->
-      <div class="summary-row total-row">
-        <span>Total</span>
-        <strong>₦{{ total|default:0 }}</strong>
-      </div>
-
-      <!-- Back -->
-      <a href="{% url 'cart' %}" class="back-cart-btn">
-        Back to Cart
-      </a>
     </div>
-  </aside>
+    <script>
+      const checkoutForm = document.querySelector(".checkout-form");
+      const successModal = document.getElementById("successModal");
 
-</main>
+      checkoutForm.addEventListener("submit", function (event) {
+        event.preventDefault();
 
-<!-- ================= SUCCESS MODAL ================= -->
-<div class="success-modal" id="successModal">
-  <div class="success-modal-card">
+        const formData = new FormData(checkoutForm);
 
-    <!-- Success icon -->
-    <div class="success-icon">✅</div>
-
-    <h2>Order Successful!</h2>
-    <p>Your food is on the way. Thank you for ordering with QuickBite.</p>
-
-    <!-- Redirect after success -->
-    <a href="{% url 'customer_dashboard' %}" class="success-btn">
-      Back to Home
-    </a>
-  </div>
-</div>
-
-<!-- ================= JAVASCRIPT ================= -->
-<script>
-const checkoutForm = document.querySelector(".checkout-form");
-const successModal = document.getElementById("successModal");
-
-checkoutForm.addEventListener("submit", function (event) {
-  event.preventDefault(); // prevent page reload
-
-  // Prevent empty cart checkout
-  if (document.querySelectorAll(".checkout-item").length === 0) {
-    alert("Your cart is empty");
-    return;
-  }
-
-  const btn = checkoutForm.querySelector(".place-order-btn");
-
-  // Loading state
-  btn.textContent = "Placing Order...";
-  btn.disabled = true;
-
-  const formData = new FormData(checkoutForm);
-
-  fetch(window.location.href, {
-    method: "POST",
-    headers: {
-      "X-Requested-With": "XMLHttpRequest",
-    },
-    body: formData,
-  })
-    .then((response) => response.json())
-    .then((data) => {
-
-      // Success
-      if (data.success) {
-        successModal.classList.add("show");
-      } else {
-        alert(data.error || "Something went wrong.");
-      }
-
-      // Reset button
-      btn.textContent = "Place Order";
-      btn.disabled = false;
-    })
-    .catch(() => {
-      alert("Network error. Try again.");
-
-      btn.textContent = "Place Order";
-      btn.disabled = false;
-    });
-});
-</script>
-
-</body>
+        fetch(window.location.href, {
+          method: "POST",
+          headers: {
+            "X-Requested-With": "XMLHttpRequest",
+          },
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              successModal.classList.add("show");
+            }
+          });
+      });
+    </script>
+  </body>
 </html>

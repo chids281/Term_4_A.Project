@@ -1,55 +1,39 @@
-{% load static %} <!-- Enables use of static files like CSS -->
-
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-    <!-- Page title -->
     <title>Login | QuickBite</title>
-
-    <!-- Link to shared auth styling -->
     <link rel="stylesheet" href="{% static 'css/auth1.css' %}">
 </head>
+<body class="auth-page">
 
-<body class="auth-page"> <!-- Applies background + layout -->
+<div class="auth-container">
 
-<div class="auth-container"> <!-- Main glass card -->
-
-    <!-- LEFT SIDE (branding / message) -->
     <div class="auth-left">
         <h1>Welcome Back</h1>
-
-        <p>
-            Login to continue your food journey with QuickBite.
-        </p>
+        <p>Login to continue your food journey with QuickBite.</p>
     </div>
 
-    <!-- RIGHT SIDE (login form) -->
     <div class="auth-right">
 
         <h2>Login</h2>
 
-        <!-- Login form -->
         <form method="post">
-            {% csrf_token %} <!-- Security token (VERY IMPORTANT) -->
+            {% csrf_token %}
 
-            <!-- Non-field errors (e.g. wrong username/password) -->
             {{ form.non_field_errors }}
 
-            <!-- Username field -->
             <div class="form-group">
                 {{ form.username }}
             </div>
 
-            <!-- Password field -->
             <div class="form-group">
                 {{ form.password }}
             </div>
 
-            <!-- Submit button -->
             <button type="submit">Login</button>
         </form>
 
-        <!-- Switch to signup -->
         <p class="switch-text">
             Don’t have an account?
             <a href="{% url 'signup' %}">Sign Up</a>

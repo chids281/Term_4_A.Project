@@ -2,19 +2,13 @@
 <!doctype html>
 <html>
 <head>
-  <!-- Page title -->
   <title>Payment | QuickBite</title>
-
-  <!-- Main customer CSS -->
   <link rel="stylesheet" href="{% static 'css/customer.css' %}?v=120">
-
-  <!-- Profile sub-pages CSS -->
   <link rel="stylesheet" href="{% static 'css/profile_pages.css' %}?v=1">
 </head>
 
 <body class="profile-sub-body">
 
-<!-- TOP NAVBAR -->
 <nav class="top-nav">
   <div class="logo">🍴 <span>Quick</span>Bite</div>
 
@@ -32,14 +26,10 @@
   </div>
 </nav>
 
-<!-- MAIN CONTENT -->
 <main class="sub-page">
   <section class="sub-card">
-
-    <!-- Back link -->
     <a href="{% url 'profile' %}" class="back-link">← Back to Profile</a>
 
-    <!-- Page heading -->
     <div class="sub-header">
       <div>
         <h1>Payment</h1>
@@ -48,20 +38,17 @@
       <span class="sub-icon">💳</span>
     </div>
 
-    <!-- Active payment method -->
     <div class="payment-card">
       <h2>Cash on Delivery</h2>
       <p>Pay when your food arrives at your doorstep.</p>
       <span class="active-badge">Active</span>
     </div>
 
-    <!-- Future payment method -->
     <div class="payment-card muted">
       <h2>Card Payment</h2>
       <p>Online card payment will be available soon.</p>
       <span class="soon-badge">Coming Soon</span>
     </div>
-
   </section>
 </main>
 

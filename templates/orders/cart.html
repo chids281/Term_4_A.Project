@@ -2,28 +2,21 @@
 <!doctype html>
 <html>
 <head>
-  <!-- Page title -->
   <title>My Cart | QuickBite</title>
-
-  <!-- Main styles -->
   <link rel="stylesheet" href="{% static 'css/customer.css' %}?v=70">
   <link rel="stylesheet" href="{% static 'css/cart.css' %}?v=70">
 </head>
 
 <body class="cart-body">
 
-<!-- ================= NAVBAR ================= -->
 <nav class="top-nav">
   <div class="logo">🍴 <span>Quick</span>Bite</div>
 
   <div class="nav-links">
     <a href="{% url 'customer_dashboard' %}">Home</a>
     <a href="#">Restaurants</a>
-    <a href="{% url 'my_orders' %}">Orders</a>
-
-    <!-- Active cart page -->
+            <a href="{% url 'my_orders' %}">Orders</a>
     <a href="{% url 'cart' %}" class="active">My Cart</a>
-
     <a href="{% url 'profile' %}">Profile</a>
   </div>
 
@@ -33,38 +26,27 @@
   </div>
 </nav>
 
-
-<!-- ================= MAIN CART ================= -->
 <main class="cart-page">
 
-<!-- LEFT SIDE -->
 <section class="cart-main-card">
-
-  <!-- Header -->
   <div class="cart-header-row">
     <div>
       <h1>My Cart</h1>
       <p>Review your items before checkout</p>
     </div>
 
-    <!-- Back to dashboard -->
     <a href="{% url 'customer_dashboard' %}" class="continue-btn">
       ← Continue Shopping
     </a>
   </div>
 
   {% if cart_items %}
-
-  <!-- CART ITEMS -->
   <div class="cart-items-list">
 
     {% for item in cart_items %}
     <div class="cart-item-card" data-id="{{ item.id }}">
 
-      <!-- LEFT: Image + info -->
       <div class="cart-item-left">
-
-        <!-- Dish image -->
         <div class="cart-item-image">
           {% if item.dish.image %}
             <img src="{{ item.dish.image.url }}">
@@ -73,59 +55,47 @@
           {% endif %}
         </div>
 
-        <!-- Dish info -->
         <div class="cart-item-info">
           <h3>{{ item.dish.name }}</h3>
 
-          <!-- Restaurant name -->
           {% if item.dish.restaurant %}
             <p class="restaurant-name">{{ item.dish.restaurant.name }}</p>
           {% else %}
             <p class="restaurant-name">QuickBite Restaurant</p>
           {% endif %}
 
-          <!-- Price -->
           <strong>₦{{ item.dish.price }}</strong>
         </div>
       </div>
 
-      <!-- RIGHT: Actions -->
       <div class="cart-item-actions">
-
-        <!-- Quantity controls -->
         <div class="qty-controls">
           <button type="button" class="qty-btn minus">−</button>
           <span class="qty-value">{{ item.quantity }}</span>
           <button type="button" class="qty-btn plus">+</button>
         </div>
 
-        <!-- Item subtotal -->
+        <!-- ✅ FIXED -->
         <strong class="item-total">
           ₦{{ item.subtotal }}
         </strong>
 
-        <!-- Remove item -->
         <button type="button" class="remove-btn">🗑</button>
-
       </div>
+
     </div>
     {% endfor %}
 
   </div>
-
   {% else %}
-
-  <!-- EMPTY CART -->
   <div class="empty-cart-box">
     <div class="empty-icon">🛍️</div>
     <h2>Your cart is empty</h2>
     <p>Add delicious meals from the dashboard.</p>
     <a href="{% url 'customer_dashboard' %}">Add items to cart</a>
   </div>
-
   {% endif %}
 
-  <!-- Security note -->
   <div class="secure-box">
     <div class="secure-icon">🛡️</div>
     <div>
@@ -133,13 +103,9 @@
       <p>Your data is protected with secure checkout.</p>
     </div>
   </div>
-
 </section>
 
-
-<!-- ================= RIGHT SIDE SUMMARY ================= -->
 <aside class="cart-summary-card">
-
   <div class="summary-top">
     <h2>Cart Summary</h2>
     <div class="summary-icon">🛒</div>
@@ -147,13 +113,12 @@
 
   <div class="summary-body">
 
-    <!-- Subtotal -->
+    <!-- ✅ CORRECT -->
     <div class="summary-row">
       <span>Subtotal</span>
       <strong id="subtotal">₦{{ subtotal|default:0 }}</strong>
     </div>
 
-    <!-- Delivery -->
     <div class="summary-row">
       <span>Delivery Fee</span>
       <strong>₦1,000</strong>
@@ -161,23 +126,20 @@
 
     <hr>
 
-    <!-- Total -->
+    <!-- ✅ FIXED -->
     <div class="summary-row total-row">
       <span>Total</span>
       <strong id="grand-total">₦{{ total|default:0 }}</strong>
     </div>
 
-    <!-- Offer message -->
     <div class="offer-box">
       🏷️ You may get free delivery on special offers!
     </div>
 
-    <!-- Checkout -->
-    <a href="{% url 'checkout' %}" class="checkout-btn">
-      Proceed to Checkout &gt;
-    </a>
+<a href="{% url 'checkout' %}" class="checkout-btn">
+  Proceed to Checkout &gt;
+</a>
 
-    <!-- Continue shopping -->
     <a href="{% url 'customer_dashboard' %}" class="clear-cart-btn">
       Add More Food
     </a>
@@ -186,3 +148,111 @@
 </aside>
 
 </main>
+
+<script>
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === name + "=") {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
+const csrftoken = getCookie("csrftoken");
+
+document.querySelectorAll(".cart-item-card").forEach((card) => {
+
+  const id = card.dataset.id;
+
+  const plus = card.querySelector(".plus");
+  const minus = card.querySelector(".minus");
+  const remove = card.querySelector(".remove-btn");
+  const qtyDisplay = card.querySelector(".qty-value");
+  const itemTotal = card.querySelector(".item-total");
+
+  const subtotal = document.getElementById("subtotal");
+  const grandTotal = document.getElementById("grand-total");
+
+  function naira(amount) {
+    return "₦" + Number(amount).toLocaleString();
+  }
+
+  function updateTotals(data) {
+    subtotal.textContent = naira(data.subtotal);
+    grandTotal.textContent = naira(data.total);
+  }
+
+  plus.addEventListener("click", () => {
+    fetch(`/orders/update-cart/${id}/`, {
+      method: "POST",
+      headers: {
+        "X-CSRFToken": csrftoken,
+        "X-Requested-With": "XMLHttpRequest",
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: "action=increase",
+    })
+    .then(res => res.json())
+    .then(data => {
+      qtyDisplay.textContent = data.quantity;
+      itemTotal.textContent = naira(data.item_total);
+      updateTotals(data);
+    });
+  });
+
+  minus.addEventListener("click", () => {
+    fetch(`/orders/update-cart/${id}/`, {
+      method: "POST",
+      headers: {
+        "X-CSRFToken": csrftoken,
+        "X-Requested-With": "XMLHttpRequest",
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: "action=decrease",
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.removed) {
+        card.remove();
+      } else {
+        qtyDisplay.textContent = data.quantity;
+        itemTotal.textContent = naira(data.item_total);
+      }
+
+      updateTotals(data);
+
+      if (data.cart_count === 0) {
+        location.reload();
+      }
+    });
+  });
+
+  remove.addEventListener("click", () => {
+    fetch(`/orders/remove-from-cart/${id}/`, {
+      headers: {
+        "X-Requested-With": "XMLHttpRequest",
+      },
+    })
+    .then(res => res.json())
+    .then(data => {
+      card.remove();
+      updateTotals(data);
+
+      if (data.cart_count === 0) {
+        location.reload();
+      }
+    });
+  });
+
+});
+</script>
+
+</body>
+</html>

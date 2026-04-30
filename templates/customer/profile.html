@@ -2,19 +2,13 @@
 <!doctype html>
 <html>
 <head>
-  <!-- Page title -->
   <title>Profile | QuickBite</title>
-
-  <!-- Main customer CSS -->
   <link rel="stylesheet" href="{% static 'css/customer.css' %}?v=120">
-
-  <!-- Profile page CSS -->
   <link rel="stylesheet" href="{% static 'css/profile.css' %}?v=203">
 </head>
 
 <body class="profile-body">
 
-<!-- TOP NAVBAR -->
 <nav class="top-nav">
   <div class="logo">🍴 <span>Quick</span>Bite</div>
 
@@ -32,25 +26,20 @@
   </div>
 </nav>
 
-<!-- MAIN PROFILE PAGE -->
 <main class="profile-page">
   <section class="profile-dashboard">
 
-    <!-- Django success/error messages -->
     {% if messages %}
       {% for message in messages %}
         <div class="success-msg">{{ message }}</div>
       {% endfor %}
     {% endif %}
 
-    <!-- Two-column profile layout -->
     <div class="profile-grid">
 
-      <!-- LEFT PROFILE CARD -->
       <aside class="profile-hero-card">
         <div class="hero-pattern"></div>
 
-        <!-- User avatar initial -->
         <div class="avatar big-avatar">
           {{ user.username|first|upper }}
         </div>
@@ -59,7 +48,6 @@
         <p>🍽️ QuickBite Customer</p>
         <span>@{{ user.username }}</span>
 
-        <!-- User stats -->
         <div class="profile-stats">
           <div>
             <strong>{{ total_orders }}</strong>
@@ -78,13 +66,11 @@
         </div>
       </aside>
 
-      <!-- RIGHT ACCOUNT CENTER -->
       <section class="profile-main-card">
         <h2>Account Center</h2>
 
         <div class="quick-actions">
 
-          <!-- Opens address modal -->
           <button type="button" class="action-card" onclick="openAddressModal()">
             <span>📍</span>
             <div>
@@ -132,7 +118,6 @@
 
         </div>
 
-        <!-- Logout -->
         <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
       </section>
 
@@ -140,17 +125,13 @@
   </section>
 </main>
 
-<!-- ADDRESS MODAL -->
 <div class="address-modal" id="addressModal">
   <div class="address-modal-card">
-
-    <!-- Close button -->
     <button class="close-modal" type="button" onclick="closeAddressModal()">×</button>
 
     <h2>Manage Address</h2>
     <p>Update your delivery address and phone number.</p>
 
-    <!-- Saves phone/address -->
     <form method="POST">
       {% csrf_token %}
 
@@ -174,7 +155,6 @@
   </div>
 </div>
 
-<!-- MODAL JAVASCRIPT -->
 <script>
 function openAddressModal() {
   document.getElementById("addressModal").classList.add("show");

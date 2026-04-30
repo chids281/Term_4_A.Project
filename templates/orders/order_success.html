@@ -2,32 +2,20 @@
 <!doctype html>
 <html>
 <head>
-  <!-- Page title -->
   <title>Order Placed | QuickBite</title>
-
-  <!-- Main CSS -->
   <link rel="stylesheet" href="{% static 'css/customer.css' %}">
 </head>
 
 <body class="cart-body">
 
-<!-- CENTERED SUCCESS CONTAINER -->
 <div style="display:flex; justify-content:center; align-items:center; height:100vh;">
-
-  <!-- Success card -->
-  <div style="background:white; padding:40px; border-radius:20px; text-align:center; box-shadow:0 10px 30px rgba(0,0,0,0.1);">
-
-    <!-- Success message -->
+  <div style="background:white; padding:40px; border-radius:20px; text-align:center;">
     <h1>✅ Order Successful!</h1>
-
-    <!-- Subtext -->
     <p>Your food is on the way 🚀</p>
 
-    <!-- Navigation button -->
     <a href="{% url 'customer_dashboard' %}" class="add-cart-btn">
       Back to Home
     </a>
-
   </div>
 </div>
 

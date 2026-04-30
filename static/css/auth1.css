@@ -1,6 +1,5 @@
-/* ======================
-   RESET (removes default browser spacing)
-====================== */
+/* RESET */
+
 * {
     margin: 0;
     padding: 0;
@@ -9,66 +8,46 @@
 
 body {
     font-family: 'Segoe UI', sans-serif;
+
 }
 
+/* BACKGROUND SAME AS ONBOARDING */
 
-/* ======================
-   PAGE BACKGROUND (orange gradient)
-====================== */
 .auth-page {
     min-height: 100vh;
-
-    /* Gradient background like onboarding */
     background: linear-gradient(135deg, #ff4d00, #ff7a1a);
-
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 40px;
 }
 
+/* GLASS CARD (SAME STYLE AS ONBOARDING) */
 
-/* ======================
-   MAIN CARD (glass style container)
-====================== */
 .auth-container {
     width: 100%;
     max-width: 1200px;
     min-height: 650px;
-
-    /* Slight transparency for glass feel */
     background: rgba(255, 255, 255, 0.93);
-
     border-radius: 35px;
     padding: 50px;
-
-    /* Soft shadow for depth */
     box-shadow: 0 25px 60px rgba(0,0,0,0.25);
-
-    /* Two-column layout */
     display: grid;
     grid-template-columns: 1fr 1fr;
-
     gap: 20px;
-
     position: relative;
     overflow: hidden;
 }
 
+/* BACKGROUND SHAPES (MATCH ONBOARDING) */
 
-/* ======================
-   BACKGROUND DECORATIVE SHAPES
-====================== */
 .auth-container::before {
     content: "";
     position: absolute;
-
     width: 400px;
     height: 400px;
-
     background: rgba(255, 77, 0, 0.12);
     border-radius: 50%;
-
     top: -120px;
     right: -100px;
 }
@@ -76,21 +55,16 @@ body {
 .auth-container::after {
     content: "";
     position: absolute;
-
     width: 280px;
     height: 280px;
-
     background: rgba(255, 122, 26, 0.15);
     border-radius: 50%;
-
     bottom: -100px;
     left: -80px;
 }
 
+/* LEFT SIDE */
 
-/* ======================
-   LEFT SIDE (branding text)
-====================== */
 .auth-left {
     display: flex;
     flex-direction: column;
@@ -111,17 +85,13 @@ body {
     max-width: 420px;
 }
 
+/* RIGHT SIDE */
 
-/* ======================
-   RIGHT SIDE (forms/buttons)
-====================== */
 .auth-right {
     display: flex;
     flex-direction: column;
     justify-content: center;
-
     z-index: 2;
-
     align-items: center;
     text-align: center;
 }
@@ -136,27 +106,19 @@ body {
     color: #666;
 }
 
+/* BUTTONS */
 
-/* ======================
-   BUTTONS
-====================== */
 .auth-link-btn {
     width: 260px;
     padding: 15px;
-
     border-radius: 16px;
-
     background: #ff4d00;
     color: white;
-
     font-weight: bold;
     text-decoration: none;
-
     margin-top: 12px;
     display: inline-block;
-
     text-align: center;
-
     transition: 0.3s;
 }
 
@@ -164,17 +126,11 @@ body {
     transform: translateY(-2px);
 }
 
-/* Outline button version */
 .auth-link-btn.outline {
     background: white;
     color: #ff4d00;
     border: 2px solid #ff4d00;
 }
-
-
-/* ======================
-   FORM INPUTS
-====================== */
 .form-group {
     margin-bottom: 15px;
 }
@@ -183,45 +139,32 @@ body {
 .form-group select {
     width: 100%;
     padding: 14px;
-
     border-radius: 14px;
     border: 1px solid #ddd;
-
     font-size: 15px;
     outline: none;
 }
 
-/* Input focus effect */
 .form-group input:focus,
 .form-group select:focus {
     border-color: #ff4d00;
 }
 
-
-/* ======================
-   SUBMIT BUTTON
-====================== */
 button {
     width: 100%;
     padding: 15px;
-
     border-radius: 16px;
     border: none;
-
     background: #ff4d00;
     color: white;
-
     font-weight: bold;
     cursor: pointer;
 }
 
+/* MOBILE */
 
-/* ======================
-   MOBILE RESPONSIVE
-====================== */
 @media (max-width: 768px) {
 
-    /* Stack layout on mobile */
     .auth-container {
         grid-template-columns: 1fr;
         padding: 30px;

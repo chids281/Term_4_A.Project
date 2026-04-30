@@ -1,24 +1,13 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Page setup -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Admin{% endblock %} | FoodAdmin</title>
-
-    <!-- Google fonts -->
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-
     <style>
-        /* Reset default browser spacing */
-        *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Global theme colors and reusable values */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
         :root {
             --coral: #e8614a;
             --coral-light: #f0826e;
@@ -35,570 +24,165 @@
             --shadow: 0 4px 24px rgba(0,0,0,0.07);
             --radius: 14px;
         }
-
-        /* Main page layout */
-        body {
-            font-family: 'DM Sans', sans-serif;
-            background: var(--body-bg);
-            color: var(--text-dark);
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* Fixed left sidebar */
-        #sidebar {
-            width: 260px;
-            min-height: 100vh;
-            background: linear-gradient(180deg, #1c1c1c, #141414);
-            position: fixed;
-            top: 0;
-            left: 0;
-            display: flex;
-            flex-direction: column;
-            z-index: 100;
-            box-shadow: 4px 0 30px rgba(0,0,0,0.2);
-        }
-
-        /* Logo area */
-        .sidebar-brand {
-            padding: 28px 24px 20px;
-            border-bottom: 1px solid #2e2e2e;
-        }
-
-        .sidebar-brand .logo-text {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            color: var(--white);
-        }
-
-        .sidebar-brand .logo-text span {
-            color: var(--coral);
-        }
-
-        .sidebar-brand .logo-sub {
-            font-size: 0.65rem;
-            color: #555;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-top: 3px;
-        }
-
-        /* Sidebar section headings */
-        .nav-section {
-            font-size: 0.63rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #444;
-            padding: 18px 24px 6px;
-            font-weight: 600;
-        }
-
-        /* Sidebar links */
-        .nav-link {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 11px 24px;
-            color: var(--sidebar-text);
-            text-decoration: none;
-            font-size: 0.87rem;
-            font-weight: 500;
-            transition: all 0.25s ease;
-            border-left: 3px solid transparent;
-        }
-
-        /* Sidebar hover effect */
-        .nav-link:hover {
-            color: var(--white);
-            background: #242424;
-            border-left-color: #444;
-            transform: translateX(4px);
-        }
-
-        /* Active sidebar page */
-        .nav-link.active {
-            color: var(--white);
-            background: linear-gradient(90deg, rgba(232,97,74,0.15), transparent);
-            border-left-color: var(--coral);
-        }
-
-        .nav-link svg {
-            width: 17px;
-            height: 17px;
-            flex-shrink: 0;
-            opacity: 0.7;
-        }
-
-        .nav-link.active svg {
-            opacity: 1;
-        }
-
-        /* Sidebar bottom footer */
-        .sidebar-footer {
-            margin-top: auto;
-            padding: 18px 24px;
-            border-top: 1px solid #2a2a2a;
-            font-size: 0.75rem;
-            color: #444;
-        }
-
-        /* Main area beside sidebar */
-        #main {
-            margin-left: 260px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Top navigation bar */
-        .topbar {
-            background: rgba(255,255,255,0.9);
-            backdrop-filter: blur(10px);
-            padding: 0 32px;
-            height: 66px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 50;
-        }
-
-        .topbar-title {
-            font-size: 1rem;
-            font-weight: 700;
-        }
-
-        /* Admin name badge */
-        .admin-badge {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: var(--coral-pale);
-            padding: 5px 14px 5px 5px;
-            border-radius: 40px;
-        }
-
-        .admin-avatar {
-            width: 34px;
-            height: 34px;
-            background: var(--coral);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 700;
-            font-size: 0.78rem;
-        }
-
-        .admin-name {
-            font-size: 0.82rem;
-            font-weight: 600;
-        }
-
-        /* Page content area */
-        .page-content {
-            padding: 28px 32px;
-            flex: 1;
-            animation: fadeSlide 0.4s ease;
-        }
-
-        /* Smooth page entrance animation */
-        @keyframes fadeSlide {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Django messages / alerts */
-        .alert {
-            padding: 12px 16px;
-            border-radius: 10px;
-            font-size: 0.86rem;
-            margin-bottom: 12px;
-            border-left: 4px solid;
-        }
-
-        .alert-success {
-            background: #edfaf1;
-            color: #1a7f4b;
-            border-color: #2ecc71;
-        }
-
-        .alert-error,
-        .alert-danger {
-            background: var(--coral-pale);
-            color: var(--coral-dark);
-            border-color: var(--coral);
-        }
-
-        /* White reusable card box */
-        .card {
-            background: var(--white);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 24px;
-        }
-
-        .card-title {
-            font-size: 0.92rem;
-            font-weight: 700;
-            margin-bottom: 18px;
-            padding-bottom: 14px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .card-title::before {
-            content: '';
-            width: 8px;
-            height: 8px;
-            background: var(--coral);
-            border-radius: 50%;
-            display: inline-block;
-        }
-
-        /* Dashboard stat card layout */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 18px;
-            margin-bottom: 26px;
-        }
-
-        .stat-card {
-            background: var(--white);
-            border-radius: var(--radius);
-            padding: 20px;
-            box-shadow: var(--shadow);
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            transition: transform 0.2s;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-6px) scale(1.02);
-        }
-
-        .stat-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .stat-icon svg {
-            width: 22px;
-            height: 22px;
-            color: white;
-        }
-
-        .stat-number {
-            font-size: 1.8rem;
-            font-weight: 700;
-            line-height: 1;
-        }
-
-        .stat-label {
-            font-size: 0.76rem;
-            color: var(--text-light);
-            margin-top: 4px;
-        }
-
-        /* Table styling */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.86rem;
-        }
-
-        thead th {
-            padding: 10px 14px;
-            text-align: left;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-light);
-            font-weight: 600;
-            border-bottom: 1px solid var(--border);
-        }
-
-        tbody tr {
-            border-bottom: 1px solid var(--border);
-            transition: background 0.15s;
-        }
-
-        tbody tr:hover {
-            background: var(--coral-pale);
-        }
-
-        tbody tr:last-child {
-            border-bottom: none;
-        }
-
-        tbody td {
-            padding: 12px 14px;
-            color: var(--text-mid);
-            vertical-align: middle;
-        }
-
-        td strong {
-            color: var(--text-dark);
-        }
-
-        /* Small status labels */
-        .badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.71rem;
-            font-weight: 600;
-        }
-
-        .badge-active {
-            background: #edfaf1;
-            color: #1a7f4b;
-        }
-
-        .badge-inactive {
-            background: var(--coral-pale);
-            color: var(--coral-dark);
-        }
-
-        .badge-pending {
-            background: #fff8e6;
-            color: #b07a00;
-        }
-
-        .badge-empty {
-            background: #f0f0f0;
-            color: #888;
-        }
-
-        .badge-cat {
-            background: var(--coral-pale);
-            color: var(--coral-dark);
-        }
-
-        /* Form styling */
-        .form-group {
-            margin-bottom: 16px;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 0.82rem;
-            font-weight: 600;
-            margin-bottom: 6px;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 10px 14px;
-            border: 1.5px solid var(--border);
-            border-radius: 10px;
-            font-size: 0.87rem;
-            font-family: 'DM Sans', sans-serif;
-            color: var(--text-dark);
-            background: var(--white);
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .form-control:focus {
-            border-color: var(--coral);
-        }
-
-        .form-control:disabled {
-            background: #f5f5f5;
-            color: #aaa;
-            cursor: not-allowed;
-        }
-
-        .form-hint {
-            font-size: 0.74rem;
-            color: var(--text-light);
-            margin-top: 4px;
-        }
-
-        /* Buttons */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 7px;
-            padding: 10px 20px;
-            border-radius: 10px;
-            font-size: 0.87rem;
-            font-weight: 600;
-            font-family: 'DM Sans', sans-serif;
-            cursor: pointer;
-            border: none;
-            transition: all 0.2s;
-            text-decoration: none;
-            width: 100%;
-        }
-
-        .btn-primary {
-            background: var(--coral);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: var(--coral-dark);
-        }
-
-        .btn-dark {
-            background: var(--text-dark);
-            color: white;
-        }
-
-        .btn-dark:hover {
-            background: #333;
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: var(--coral);
-            border: 1.5px solid var(--coral);
-            padding: 6px 14px;
-            font-size: 0.79rem;
-            width: auto;
-        }
-
-        .btn-outline:hover {
-            background: var(--coral);
-            color: white;
-        }
-
-        /* Layout helper classes */
-        .split-layout {
-            display: grid;
-            grid-template-columns: 320px 1fr;
-            gap: 24px;
-        }
-
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-        }
-
-        .col-stack {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-
-        .mb-24 {
-            margin-bottom: 24px;
-        }
+ 
+        body { font-family: 'DM Sans', sans-serif; background: var(--body-bg); color: var(--text-dark); display: flex; min-height: 100vh; }
+ 
+        /* SIDEBAR */
+        #sidebar { width: 260px; min-height: 100vh; background: var(--sidebar-bg); position: fixed; top: 0; left: 0; display: flex; flex-direction: column; z-index: 100; }
+ 
+        .sidebar-brand { padding: 28px 24px 20px; border-bottom: 1px solid #2e2e2e; }
+        .sidebar-brand .logo-text { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--white); }
+        .sidebar-brand .logo-text span { color: var(--coral); }
+        .sidebar-brand .logo-sub { font-size: 0.65rem; color: #555; letter-spacing: 2px; text-transform: uppercase; margin-top: 3px; }
+ 
+        .nav-section { font-size: 0.63rem; text-transform: uppercase; letter-spacing: 2px; color: #444; padding: 18px 24px 6px; font-weight: 600; }
+ 
+        .nav-link { display: flex; align-items: center; gap: 12px; padding: 11px 24px; color: var(--sidebar-text); text-decoration: none; font-size: 0.87rem; font-weight: 500; transition: all 0.2s; border-left: 3px solid transparent; }
+        .nav-link:hover { color: var(--white); background: #242424; border-left-color: #444; }
+        .nav-link.active { color: var(--white); background: #261a18; border-left-color: var(--coral); }
+        .nav-link svg { width: 17px; height: 17px; flex-shrink: 0; opacity: 0.7; }
+        .nav-link.active svg { opacity: 1; }
+ 
+        .sidebar-footer { margin-top: auto; padding: 18px 24px; border-top: 1px solid #2a2a2a; font-size: 0.75rem; color: #444; }
+ 
+        /* MAIN */
+        #main { margin-left: 260px; flex: 1; display: flex; flex-direction: column; }
+ 
+        /* TOPBAR */
+        .topbar { background: var(--white); padding: 0 32px; height: 66px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 50; }
+        .topbar-title { font-size: 1rem; font-weight: 700; }
+        .admin-badge { display: flex; align-items: center; gap: 10px; background: var(--coral-pale); padding: 5px 14px 5px 5px; border-radius: 40px; }
+        .admin-avatar { width: 34px; height: 34px; background: var(--coral); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 0.78rem; }
+        .admin-name { font-size: 0.82rem; font-weight: 600; }
+ 
+        /* PAGE */
+        .page-content { padding: 28px 32px; flex: 1; }
+ 
+        /* ALERTS */
+        .alert { padding: 12px 16px; border-radius: 10px; font-size: 0.86rem; margin-bottom: 12px; border-left: 4px solid; }
+        .alert-success { background: #edfaf1; color: #1a7f4b; border-color: #2ecc71; }
+        .alert-error, .alert-danger { background: var(--coral-pale); color: var(--coral-dark); border-color: var(--coral); }
+ 
+        /* CARD */
+        .card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 24px; }
+        .card-title { font-size: 0.92rem; font-weight: 700; margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+        .card-title::before { content: ''; width: 8px; height: 8px; background: var(--coral); border-radius: 50%; display: inline-block; }
+ 
+        /* STAT CARDS */
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-bottom: 26px; }
+        .stat-card { background: var(--white); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); display: flex; align-items: center; gap: 14px; transition: transform 0.2s; }
+        .stat-card:hover { transform: translateY(-3px); }
+        .stat-icon { width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .stat-icon svg { width: 22px; height: 22px; color: white; }
+        .stat-number { font-size: 1.8rem; font-weight: 700; line-height: 1; }
+        .stat-label { font-size: 0.76rem; color: var(--text-light); margin-top: 4px; }
+ 
+        /* TABLE */
+        table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+        thead th { padding: 10px 14px; text-align: left; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-light); font-weight: 600; border-bottom: 1px solid var(--border); }
+        tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+        tbody tr:hover { background: var(--coral-pale); }
+        tbody tr:last-child { border-bottom: none; }
+        tbody td { padding: 12px 14px; color: var(--text-mid); vertical-align: middle; }
+        td strong { color: var(--text-dark); }
+ 
+        /* BADGE */
+        .badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 0.71rem; font-weight: 600; }
+        .badge-active { background: #edfaf1; color: #1a7f4b; }
+        .badge-inactive { background: var(--coral-pale); color: var(--coral-dark); }
+        .badge-pending { background: #fff8e6; color: #b07a00; }
+        .badge-empty { background: #f0f0f0; color: #888; }
+        .badge-cat { background: var(--coral-pale); color: var(--coral-dark); }
+ 
+        /* FORM */
+        .form-group { margin-bottom: 16px; }
+        .form-label { display: block; font-size: 0.82rem; font-weight: 600; margin-bottom: 6px; }
+        .form-control { width: 100%; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 0.87rem; font-family: 'DM Sans', sans-serif; color: var(--text-dark); background: var(--white); outline: none; transition: border-color 0.2s; }
+        .form-control:focus { border-color: var(--coral); }
+        .form-control:disabled { background: #f5f5f5; color: #aaa; cursor: not-allowed; }
+        .form-hint { font-size: 0.74rem; color: var(--text-light); margin-top: 4px; }
+ 
+        /* BUTTONS */
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; padding: 10px 20px; border-radius: 10px; font-size: 0.87rem; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; border: none; transition: all 0.2s; text-decoration: none; width: 100%; }
+        .btn-primary { background: var(--coral); color: white; }
+        .btn-primary:hover { background: var(--coral-dark); }
+        .btn-dark { background: var(--text-dark); color: white; }
+        .btn-dark:hover { background: #333; }
+        .btn-outline { background: transparent; color: var(--coral); border: 1.5px solid var(--coral); padding: 6px 14px; font-size: 0.79rem; width: auto; }
+        .btn-outline:hover { background: var(--coral); color: white; }
+ 
+        /* LAYOUT HELPERS */
+        .split-layout { display: grid; grid-template-columns: 320px 1fr; gap: 24px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .col-stack { display: flex; flex-direction: column; gap: 24px; }
+        .mb-24 { margin-bottom: 24px; }
     </style>
-
-    <!-- Allows child pages to add their own CSS -->
     {% block extra_css %}{% endblock %}
 </head>
-
 <body>
-
-<!-- LEFT ADMIN SIDEBAR -->
+ 
 <nav id="sidebar">
-
-    <!-- Brand / logo -->
     <div class="sidebar-brand">
         <div class="logo-text">Quick<span>Bite</span></div>
         <div class="logo-sub">Control Panel</div>
     </div>
-
-    <!-- Main navigation -->
+ 
     <div class="nav-section">Main</div>
-
     <a href="{% url 'adminpanel:dashboard' %}" class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
         Dashboard
     </a>
-
-    <!-- Management navigation -->
+ 
     <div class="nav-section">Management</div>
-
     <a href="{% url 'adminpanel:categories' %}" class="nav-link {% if request.resolver_match.url_name == 'categories' %}active{% endif %}">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
         Categories
     </a>
-
     <a href="{% url 'adminpanel:food_types' %}" class="nav-link {% if request.resolver_match.url_name == 'food_types' %}active{% endif %}">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
         Food Types
     </a>
-
     <a href="{% url 'adminpanel:orders' %}" class="nav-link {% if request.resolver_match.url_name == 'orders' %}active{% endif %}">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
         Orders
     </a>
-
     <a href="{% url 'adminpanel:reports' %}" class="nav-link {% if request.resolver_match.url_name == 'reports' %}active{% endif %}">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
         Reports
     </a>
-
-    <!-- Account navigation -->
+ 
     <div class="nav-section">Account</div>
-
     <a href="{% url 'adminpanel:profile' %}" class="nav-link {% if request.resolver_match.url_name == 'profile' %}active{% endif %}">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
         Profile
     </a>
-
     <a href="{% url 'logout' %}" class="nav-link">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
         Logout
     </a>
-
-    <!-- Footer -->
+ 
     <div class="sidebar-footer">QuickBite &copy; 2026</div>
 </nav>
-
-<!-- RIGHT MAIN CONTENT AREA -->
+ 
 <div id="main">
-
-    <!-- Top bar -->
     <div class="topbar">
         <div class="topbar-title">{% block page_title %}Dashboard{% endblock %}</div>
-
-        <!-- Logged-in admin display -->
         <div class="admin-badge">
-            <div class="admin-avatar">
-                {{ request.user.first_name|first|upper }}{{ request.user.last_name|first|upper }}
-            </div>
-            <div class="admin-name">
-                {{ request.user.get_full_name|default:request.user.username }}
-            </div>
+            <div class="admin-avatar">{{ request.user.first_name|first|upper }}{{ request.user.last_name|first|upper }}</div>
+            <div class="admin-name">{{ request.user.get_full_name|default:request.user.username }}</div>
         </div>
     </div>
-
-    <!-- Page content inserted by child templates -->
+ 
     <div class="page-content">
-
-        <!-- Django success/error messages -->
         {% if messages %}
             {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
             {% endfor %}
         {% endif %}
-
         {% block content %}{% endblock %}
     </div>
 </div>
-
-<!-- Allows child pages to add JavaScript -->
+ 
 {% block extra_js %}{% endblock %}
-
 </body>
 </html>

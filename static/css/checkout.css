@@ -1,31 +1,15 @@
-/* ======================
-   PAGE BACKGROUND
-====================== */
 .checkout-body {
   min-height: 100vh;
-
-  /* Soft gradient background (matches cart + category theme) */
   background: linear-gradient(135deg, #fff7f2, #ffe2d2);
 }
 
-
-/* ======================
-   MAIN LAYOUT (2 columns)
-====================== */
 .checkout-page {
   padding: 55px 4%;
   display: grid;
-
-  /* Left = form, Right = summary */
   grid-template-columns: 2fr 1fr;
-
   gap: 35px;
 }
 
-
-/* ======================
-   HEADER
-====================== */
 .checkout-header {
   margin-bottom: 25px;
 }
@@ -41,28 +25,19 @@
   font-size: 17px;
 }
 
-
-/* ======================
-   LEFT SIDE (FORM AREA)
-====================== */
 .checkout-left {
   background: #fff8f4;
   border: 1px solid #ffd6c4;
   border-radius: 28px;
   padding: 38px;
-
   box-shadow: 0 20px 50px rgba(255, 75, 0, 0.08);
 }
 
-
-/* Individual form sections (delivery info, payment, etc.) */
 .checkout-card {
   background: white;
   border-radius: 24px;
   padding: 30px;
-
   margin-bottom: 25px;
-
   box-shadow: 0 14px 35px rgba(0, 0, 0, 0.05);
 }
 
@@ -72,81 +47,57 @@
   color: #111;
 }
 
-
-/* ======================
-   FORM LAYOUT
-====================== */
 .form-grid {
   display: grid;
-
-  /* Two-column form layout */
   grid-template-columns: 1fr 1fr;
-
   gap: 18px;
 }
 
-
-/* Form group container */
 .form-group {
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
 }
 
-/* Labels */
 .form-group label {
   font-weight: 800;
   margin-bottom: 8px;
   color: #222;
 }
 
-/* Inputs & textarea */
 .form-group input,
 .form-group textarea {
   width: 100%;
   border: 1px solid #f1c9b8;
   background: #fffaf7;
-
   padding: 15px 16px;
   border-radius: 14px;
-
   font-size: 15px;
   outline: none;
 }
 
-/* Focus effect */
 .form-group input:focus,
 .form-group textarea:focus {
   border-color: #ff4b00;
   box-shadow: 0 0 0 4px rgba(255, 75, 0, 0.1);
 }
 
-
-/* ======================
-   PAYMENT OPTIONS
-====================== */
 .payment-option {
   display: flex;
   align-items: center;
   gap: 14px;
-
   padding: 18px;
-
   border: 1px solid #ffd6c4;
   border-radius: 16px;
-
   margin-bottom: 15px;
-
   background: #fffaf7;
   cursor: pointer;
 }
 
-/* Hover effect */
 .payment-option:hover {
   border-color: #ff4b00;
 }
 
-/* Radio button size */
 .payment-option input {
   transform: scale(1.2);
 }
@@ -161,25 +112,16 @@
   margin-top: 4px;
 }
 
-
-/* ======================
-   PLACE ORDER BUTTON
-====================== */
 .place-order-btn {
   width: 100%;
   padding: 18px;
-
   border: none;
   border-radius: 15px;
-
   background: linear-gradient(135deg, #ff3d00, #ff6a00);
   color: white;
-
   font-size: 17px;
   font-weight: 900;
-
   cursor: pointer;
-
   box-shadow: 0 12px 25px rgba(255, 75, 0, 0.25);
 }
 
@@ -187,28 +129,19 @@
   transform: translateY(-2px);
 }
 
-
-/* ======================
-   RIGHT SIDE (SUMMARY)
-====================== */
+/* SUMMARY */
 .checkout-summary {
   background: white;
   border-radius: 28px;
-
   overflow: hidden;
   height: fit-content;
-
   box-shadow: 0 20px 50px rgba(255, 75, 0, 0.12);
 }
 
-
-/* Top section of summary */
 .summary-top {
   background: linear-gradient(135deg, #ff3d00, #ff6a00);
   color: white;
-
   padding: 32px;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -218,44 +151,33 @@
   font-size: 30px;
 }
 
-/* Icon */
 .summary-icon {
   width: 65px;
   height: 65px;
-
   display: grid;
   place-items: center;
-
   border-radius: 18px;
-
   background: rgba(255, 255, 255, 0.18);
   font-size: 28px;
 }
 
-
-/* Body */
 .summary-body {
   padding: 30px;
 }
 
-
-/* Each checkout item */
 .checkout-item {
   display: flex;
   justify-content: space-between;
-
   gap: 15px;
-
   padding: 16px;
   border-radius: 16px;
-
   background: #fff8f4;
-
   margin-bottom: 14px;
 }
 
 .checkout-item h3 {
   color: #111;
+  margin-bottom: 5px;
 }
 
 .checkout-item p {
@@ -266,20 +188,15 @@
   color: #ff4b00;
 }
 
-
-/* Divider */
 .summary-body hr {
   border: none;
   border-top: 1px solid #ffd6c4;
   margin: 22px 0;
 }
 
-
-/* Price rows */
 .summary-row {
   display: flex;
   justify-content: space-between;
-
   margin-bottom: 18px;
   font-size: 17px;
 }
@@ -288,8 +205,6 @@
   color: #111;
 }
 
-
-/* Total row */
 .total-row {
   font-size: 28px;
   font-weight: 900;
@@ -300,18 +215,13 @@
   color: #ff4b00;
 }
 
-
-/* Back to cart button */
 .back-cart-btn {
   display: block;
   margin-top: 25px;
-
   text-align: center;
   padding: 16px;
-
   border-radius: 14px;
   border: 1px solid #ff4b00;
-
   color: #ff4b00;
   font-weight: 900;
   text-decoration: none;
@@ -322,73 +232,51 @@
   color: white;
 }
 
-
-/* Empty checkout message */
 .empty-checkout {
   background: #fff8f4;
   padding: 18px;
   border-radius: 14px;
   color: #666;
 }
-
-
-/* ======================
-   SUCCESS MODAL
-====================== */
 .success-modal {
   position: fixed;
   inset: 0;
-
   background: rgba(0, 0, 0, 0.55);
-
   display: none;
   justify-content: center;
   align-items: center;
-
   z-index: 9999;
 }
 
-/* Show modal */
 .success-modal.show {
   display: flex;
 }
 
-/* Modal card */
 .success-modal-card {
   background: white;
-
   width: 90%;
   max-width: 430px;
-
   padding: 40px;
   border-radius: 28px;
-
   text-align: center;
-
   box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25);
 }
 
-/* Success icon */
 .success-icon {
   width: 85px;
   height: 85px;
-
   background: #eaffea;
   color: #1e9b35;
-
   border-radius: 50%;
-
   display: grid;
   place-items: center;
-
   font-size: 38px;
-
   margin: 0 auto 20px;
 }
 
-/* Modal text */
 .success-modal-card h2 {
   font-size: 30px;
+  margin-bottom: 12px;
 }
 
 .success-modal-card p {
@@ -397,23 +285,16 @@
   margin-bottom: 25px;
 }
 
-/* Button */
 .success-btn {
   display: inline-block;
   background: #ff4b00;
   color: white;
-
   padding: 14px 30px;
   border-radius: 14px;
-
   text-decoration: none;
   font-weight: 800;
 }
 
-
-/* ======================
-   RESPONSIVE
-====================== */
 @media (max-width: 950px) {
   .checkout-page {
     grid-template-columns: 1fr;
