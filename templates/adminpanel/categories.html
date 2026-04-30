@@ -1,23 +1,51 @@
 {% extends 'adminpanel/base.html' %}
+
+<!-- Page title in browser tab -->
 {% block title %}Categories{% endblock %}
+
+<!-- Title shown in topbar -->
 {% block page_title %}Categories{% endblock %}
- 
+
 {% block content %}
+
+<!-- Split layout: left = form, right = table -->
 <div class="split-layout">
+
+    <!-- LEFT: Add Category Card -->
     <div class="card">
         <div class="card-title">Add New Category</div>
+
+        <!-- Form to create category -->
         <form method="POST">
             {% csrf_token %}
+
+            <!-- Input field -->
             <div class="form-group">
                 <label class="form-label">Category Name</label>
-                <input type="text" name="name" class="form-control" placeholder="e.g. Fast Food" required>
+                <input 
+                    type="text" 
+                    name="name" 
+                    class="form-control" 
+                    placeholder="e.g. Fast Food" 
+                    required
+                >
             </div>
-            <button type="submit" class="btn btn-primary">+ Add Category</button>
+
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary">
+                + Add Category
+            </button>
         </form>
     </div>
- 
+
+    <!-- RIGHT: Categories Table -->
     <div class="card">
-        <div class="card-title">All Categories ({{ categories|length }})</div>
+
+        <!-- Title with dynamic count -->
+        <div class="card-title">
+            All Categories ({{ categories|length }})
+        </div>
+
         <table>
             <thead>
                 <tr>
@@ -26,11 +54,22 @@
                     <th>Action</th>
                 </tr>
             </thead>
+
             <tbody>
+
+                <!-- Loop through categories -->
                 {% for cat in categories %}
                 <tr>
+
+                    <!-- Auto numbering -->
                     <td>{{ forloop.counter }}</td>
-                    <td><strong>{{ cat.name }}</strong></td>
+
+                    <!-- Category name -->
+                    <td>
+                        <strong>{{ cat.name }}</strong>
+                    </td>
+
+                    <!-- Delete action -->
                     <td>
                         <a href="{% url 'adminpanel:delete_category' cat.pk %}"
                            class="btn btn-outline"
@@ -38,12 +77,22 @@
                             Delete
                         </a>
                     </td>
+
                 </tr>
+
+                <!-- If no categories -->
                 {% empty %}
-                <tr><td colspan="3" style="text-align:center; color:#aaa; padding:24px;">No categories yet.</td></tr>
+                <tr>
+                    <td colspan="3" style="text-align:center; color:#aaa; padding:24px;">
+                        No categories yet.
+                    </td>
+                </tr>
                 {% endfor %}
+
             </tbody>
         </table>
     </div>
+
 </div>
+
 {% endblock %}

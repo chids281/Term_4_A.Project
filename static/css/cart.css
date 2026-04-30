@@ -1,34 +1,55 @@
+/* ======================
+   PAGE BACKGROUND
+====================== */
 .cart-body {
   min-height: 100vh;
+
+  /* Soft warm background (fits your orange theme) */
   background: #fffaf7;
 }
 
+
+/* ======================
+   MAIN LAYOUT (2 columns)
+====================== */
 .cart-page {
   padding: 55px 4%;
+
   display: grid;
-  grid-template-columns: 2.2fr 1fr;
+  grid-template-columns: 2.2fr 1fr; /* left = items, right = summary */
   gap: 35px;
 }
 
+
+/* ======================
+   LEFT SIDE CARD (cart items container)
+====================== */
 .cart-main-card {
   background: #fff8f4;
+
   border: 1px solid #ffd8c8;
   border-radius: 24px;
+
   padding: 38px;
+
   box-shadow: 0 18px 45px rgba(255, 75, 0, 0.08);
 }
 
+
+/* ======================
+   HEADER SECTION
+====================== */
 .cart-header-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   margin-bottom: 35px;
 }
 
 .cart-header-row h1 {
   font-size: 46px;
   color: #171717;
-  margin-bottom: 8px;
 }
 
 .cart-header-row p {
@@ -36,39 +57,57 @@
   font-size: 17px;
 }
 
+
+/* Continue shopping button */
 .continue-btn {
   padding: 14px 28px;
   border: 1px solid #ff4b00;
   border-radius: 12px;
+
   color: #ff4b00;
   text-decoration: none;
   font-weight: 800;
+
   background: white;
 }
 
+
+/* ======================
+   CART ITEMS LIST
+====================== */
 .cart-items-list {
   display: flex;
   flex-direction: column;
   gap: 18px;
 }
 
+
+/* Individual cart item card */
 .cart-item-card {
   background: #fff;
+
   border-radius: 20px;
   padding: 18px 22px;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   gap: 25px;
+
   box-shadow: 0 12px 35px rgba(0, 0, 0, 0.06);
 }
 
+
+/* Left section (image + info) */
 .cart-item-left {
   display: flex;
   align-items: center;
   gap: 22px;
 }
 
+
+/* Dish image */
 .cart-item-image img {
   width: 185px;
   height: 120px;
@@ -76,16 +115,16 @@
   border-radius: 16px;
 }
 
+
+/* Dish info */
 .cart-item-info h3 {
   font-size: 22px;
   color: #171717;
-  margin-bottom: 8px;
 }
 
 .restaurant-name {
   color: #ff4b00;
   font-weight: 700;
-  margin-bottom: 12px;
 }
 
 .cart-item-info strong {
@@ -93,129 +132,120 @@
   color: #111;
 }
 
+
+/* ======================
+   ACTIONS (qty + delete)
+====================== */
 .cart-item-actions {
   display: flex;
   align-items: center;
   gap: 35px;
 }
 
+
+/* Quantity controls */
 .qty-controls {
   display: flex;
   align-items: center;
   gap: 14px;
 }
 
+/* Minus / plus buttons */
 .qty-btn {
   width: 48px;
   height: 48px;
+
   border-radius: 12px;
   border: 1px solid #ffd2bf;
+
   background: #fff7f2;
   color: #ff4b00;
+
   font-size: 26px;
   font-weight: 800;
   cursor: pointer;
 }
 
+/* Plus button (highlighted) */
 .qty-btn.plus {
   background: #ff4b00;
   color: #fff;
   border-color: #ff4b00;
 }
 
+/* Quantity number */
 .qty-value {
   font-size: 22px;
   font-weight: 800;
-  min-width: 24px;
-  text-align: center;
 }
 
+
+/* Total price per item */
 .item-total {
   font-size: 25px;
   color: #111;
-  min-width: 110px;
-  text-align: right;
 }
 
+
+/* Remove button */
 .remove-btn {
   width: 48px;
   height: 48px;
+
   border: none;
   border-radius: 12px;
+
   background: #ffe8e5;
   color: #ff2b1a;
+
   font-size: 20px;
   cursor: pointer;
 }
 
-.secure-box {
-  margin-top: 35px;
-  padding: 24px;
-  border: 1px solid #ffd5c2;
-  border-radius: 18px;
-  display: flex;
-  gap: 18px;
-  align-items: center;
-}
 
-.secure-icon {
-  width: 55px;
-  height: 55px;
-  background: #ffe0cf;
-  border-radius: 14px;
-  display: grid;
-  place-items: center;
-}
-
+/* ======================
+   RIGHT SIDE (SUMMARY CARD)
+====================== */
 .cart-summary-card {
   background: white;
   border-radius: 24px;
-  overflow: hidden;
+
   height: fit-content;
+
   box-shadow: 0 18px 45px rgba(255, 75, 0, 0.12);
 }
 
+
+/* Top section */
 .summary-top {
   background: #ff4b00;
   color: white;
+
   padding: 32px;
+
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 
 .summary-top h2 {
   font-size: 29px;
 }
 
-.summary-icon {
-  width: 65px;
-  height: 65px;
-  background: rgba(255, 255, 255, 0.18);
-  border-radius: 18px;
-  display: grid;
-  place-items: center;
-  font-size: 30px;
-}
 
+/* Body */
 .summary-body {
   padding: 32px;
 }
 
+/* Rows (subtotal, delivery, etc.) */
 .summary-row {
   display: flex;
   justify-content: space-between;
+
   margin-bottom: 24px;
-  color: #222;
-  font-size: 18px;
 }
 
-.summary-body hr {
-  border: none;
-  border-top: 1px solid #ffd5c2;
-  margin: 10px 0 28px;
-}
-
+/* Total row */
 .total-row {
   font-size: 28px;
   font-weight: 900;
@@ -225,118 +255,53 @@
   color: #ff4b00;
 }
 
-.offer-box {
-  background: #eff9e9;
-  color: #2b7a12;
-  padding: 18px;
-  border-radius: 12px;
-  font-weight: 800;
-  margin-bottom: 25px;
-}
 
+/* Checkout button */
 .checkout-btn {
   margin-top: 15px;
+
   width: 100%;
   background: #ff4b00;
+
   padding: 17px;
-  display: block;
+
+  border-radius: 13px;
   text-align: center;
-  border: 1px solid #ff4b00;
+
   color: #fefdfd;
-  border-radius: 13px;
   text-decoration: none;
   font-weight: 900;
 }
 
-.clear-cart-btn {
-  margin-top: 15px;
-  width: 100%;
-  padding: 17px;
-  display: block;
-  text-align: center;
-  border: 1px solid #ff4b00;
-  color: #ff4b00;
-  border-radius: 13px;
-  text-decoration: none;
-  font-weight: 900;
-}
 
-.benefits {
-  margin-top: 30px;
-  background: #fff8f4;
-  border-radius: 18px;
-  padding: 20px;
-}
-
-.benefits div {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 18px;
-}
-
-.benefits span {
-  width: 45px;
-  height: 45px;
-  background: #ffe0cf;
-  border-radius: 12px;
-  display: grid;
-  place-items: center;
-}
-
-.benefits p {
-  color: #333;
-  line-height: 1.5;
-}
-
+/* ======================
+   EMPTY CART
+====================== */
 .empty-cart-box {
   background: white;
   border-radius: 22px;
+
   min-height: 310px;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 14px;
 }
 
-.empty-icon {
-  width: 88px;
-  height: 88px;
-  background: #111;
-  color: white;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  font-size: 34px;
-}
 
-.empty-cart-box a {
-  background: #ff4b00;
-  color: white;
-  padding: 15px 34px;
-  border-radius: 13px;
-  text-decoration: none;
-  font-weight: 800;
-}
-
+/* ======================
+   RESPONSIVE DESIGN
+====================== */
 @media (max-width: 950px) {
+
+  /* Stack layout */
   .cart-page {
     grid-template-columns: 1fr;
   }
 
-  .cart-header-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
-  }
-
-  .cart-item-card,
-  .cart-item-actions {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .cart-item-left {
+  /* Adjust item layout */
+  .cart-item-card {
     flex-direction: column;
     align-items: flex-start;
   }

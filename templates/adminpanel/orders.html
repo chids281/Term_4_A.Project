@@ -1,10 +1,19 @@
 {% extends 'adminpanel/base.html' %}
+
+<!-- Browser tab title -->
 {% block title %}Orders{% endblock %}
+
+<!-- Topbar title -->
 {% block page_title %}Customer Orders{% endblock %}
- 
+
 {% block content %}
+
+<!-- Main card container -->
 <div class="card">
+
+    <!-- Section title -->
     <div class="card-title">All Customer Orders</div>
+
     <table>
         <thead>
             <tr>
@@ -15,33 +24,67 @@
                 <th>Status</th>
             </tr>
         </thead>
+
         <tbody>
+
+            <!-- Loop through carts (each cart = an order for now) -->
             {% for cart in carts %}
             <tr>
+
+                <!-- Row number -->
                 <td>{{ forloop.counter }}</td>
-                <td><strong>{{ cart.user.username }}</strong></td>
+
+                <!-- Customer username -->
                 <td>
+                    <strong>{{ cart.user.username }}</strong>
+                </td>
+
+                <!-- Items inside the cart -->
+                <td>
+
                     {% for item in cart.items.all %}
+                        <!-- Each dish in the cart -->
                         <span style="background:var(--coral-pale); color:var(--coral-dark); padding:3px 8px; border-radius:20px; font-size:0.75rem; font-weight:600; margin-right:4px;">
                             {{ item.dish.name }} x{{ item.quantity }}
                         </span>
                     {% empty %}
+                        <!-- If no items -->
                         <span style="color:#aaa;">Empty cart</span>
                     {% endfor %}
+
                 </td>
-                <td><strong>${{ cart.total_price }}</strong></td>
+
+                <!-- Total price -->
                 <td>
+                    <strong>${{ cart.total_price }}</strong>
+                </td>
+
+                <!-- Order status -->
+                <td>
+
                     {% if cart.items.count > 0 %}
-                    <span class="badge badge-pending">Pending</span>
+                        <!-- If cart has items -->
+                        <span class="badge badge-pending">Pending</span>
                     {% else %}
-                    <span class="badge badge-empty">Empty</span>
+                        <!-- If empty -->
+                        <span class="badge badge-empty">Empty</span>
                     {% endif %}
+
+                </td>
+
+            </tr>
+
+            <!-- If no carts -->
+            {% empty %}
+            <tr>
+                <td colspan="5" style="text-align:center; color:#aaa; padding:24px;">
+                    No orders found.
                 </td>
             </tr>
-            {% empty %}
-            <tr><td colspan="5" style="text-align:center; color:#aaa; padding:24px;">No orders found.</td></tr>
             {% endfor %}
+
         </tbody>
     </table>
 </div>
+
 {% endblock %}

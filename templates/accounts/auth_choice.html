@@ -1,27 +1,53 @@
-{% load static %}
+{% load static %} <!-- Enables use of static files like CSS -->
+
 <!DOCTYPE html>
 <html>
 <head>
+    <!-- Page title shown in browser tab -->
     <title>Welcome | QuickBite</title>
+
+    <!-- Link to your auth CSS file -->
     <link rel="stylesheet" href="{% static 'css/auth1.css' %}">
 </head>
-  <body class="auth-page">
+
+<body class="auth-page"> <!-- Applies full-page background styling -->
+
+    <!-- Main container (glass-style card) -->
     <div class="auth-container">
-      <div class="auth-left">
-        <h1>Welcome to QuickBite</h1>
-        <p>
-          Fresh meals, fast delivery, and easy ordering from your favorite
-          restaurants.
-        </p>
-      </div>
 
-      <div class="auth-right">
-        <h2>Get Started</h2>
-        <p class="switch-text">Create an account or log in to continue.</p>
+        <!-- LEFT SIDE (branding / intro text) -->
+        <div class="auth-left">
+            <h1>Welcome to QuickBite</h1>
 
-        <a href="{% url 'signup' %}" class="auth-link-btn">Sign Up</a>
-        <a href="{% url 'login' %}" class="auth-link-btn outline">Login</a>
-      </div>
+            <p>
+                Fresh meals, fast delivery, and easy ordering from your favorite
+                restaurants.
+            </p>
+        </div>
+
+        <!-- RIGHT SIDE (actions: signup/login) -->
+        <div class="auth-right">
+
+            <!-- Section heading -->
+            <h2>Get Started</h2>
+
+            <!-- Subtext -->
+            <p class="switch-text">
+                Create an account or log in to continue.
+            </p>
+
+            <!-- Sign Up button (routes to signup view) -->
+            <a href="{% url 'signup' %}" class="auth-link-btn">
+                Sign Up
+            </a>
+
+            <!-- Login button (routes to login view) -->
+            <a href="{% url 'login' %}" class="auth-link-btn outline">
+                Login
+            </a>
+
+        </div>
     </div>
-  </body>
+
+</body>
 </html>

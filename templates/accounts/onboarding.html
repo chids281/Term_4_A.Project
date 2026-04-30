@@ -1,18 +1,35 @@
-{% load static %}
+{% load static %} <!-- Enables use of static files -->
+
 <!doctype html>
 <html>
   <head>
+    <!-- Page title -->
     <title>Welcome to QuickBite</title>
+
+    <!-- Onboarding CSS -->
     <link rel="stylesheet" href="{% static 'css/start.css' %}" />
   </head>
-  <body class="onboarding-page">
+
+  <body class="onboarding-page"> <!-- Applies onboarding background + layout -->
+
+    <!-- Main container (glass card / phone layout) -->
     <div class="phone-screen">
-    <button class="back-btn" onclick="prevSlide()" id="backBtn">←</button>
+
+      <!-- Back button (goes to previous slide) -->
+      <button class="back-btn" onclick="prevSlide()" id="backBtn">←</button>
+
+
+      <!-- ======================
+           SLIDE 1 (ACTIVE BY DEFAULT)
+      ======================= -->
       <div class="slide active">
+        <!-- Image -->
         <img src="{% static 'images/onboarding1.jpg' %}" alt="Choose meal" />
 
+        <!-- Text -->
         <div class="slide-text">
           <h2>Choose your <span class="highlight">meal</span>!</h2>
+
           <p>
             Discover delicious meals from your favorite restaurants in just a
             few taps.
@@ -20,20 +37,32 @@
         </div>
       </div>
 
+
+      <!-- ======================
+           SLIDE 2
+      ======================= -->
       <div class="slide">
         <img src="{% static 'images/onboarding2.jpg' %}" alt="Special offer" />
 
         <div class="slide-text">
           <h2>Get special <span class="highlight">offers</span>!</h2>
-          <p>Sign up today and enjoy amazing discounts on your first order.</p>
+
+          <p>
+            Sign up today and enjoy amazing discounts on your first order.
+          </p>
         </div>
       </div>
 
+
+      <!-- ======================
+           SLIDE 3
+      ======================= -->
       <div class="slide">
         <img src="{% static 'images/onboarding3.jpg' %}" alt="Track order" />
 
         <div class="slide-text">
           <h2>Track your <span class="highlight">order!</span></h2>
+
           <p>
             Follow your meal in real time from the kitchen straight to your
             door.
@@ -41,18 +70,34 @@
         </div>
       </div>
 
+
+      <!-- ======================
+           DOT INDICATORS
+      ======================= -->
       <div class="dots">
-        <span class="dot active-dot"></span>
+        <span class="dot active-dot"></span> <!-- Active slide -->
         <span class="dot"></span>
         <span class="dot"></span>
       </div>
 
+
+      <!-- ======================
+           BUTTONS
+      ======================= -->
       <div class="onboarding-buttons">
+
+        <!-- Skip onboarding -->
         <button onclick="skipOnboarding()">Skip</button>
+
+        <!-- Next / Get Started -->
         <button onclick="nextSlide()" id="nextBtn">Next</button>
       </div>
+
     </div>
 
+
+    <!-- JavaScript controlling slide behavior -->
     <script src="{% static 'js/onboarding.js' %}"></script>
+
   </body>
 </html>

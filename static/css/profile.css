@@ -1,3 +1,6 @@
+/* ======================
+   PROFILE PAGE BACKGROUND
+====================== */
 .profile-body {
     background:
         radial-gradient(circle at top left, rgba(255, 61, 0, 0.12), transparent 35%),
@@ -5,10 +8,19 @@
     min-height: 100vh;
 }
 
+
+/* ======================
+   PAGE WRAPPER
+====================== */
 .profile-page {
-    min-height: calc(100vh - 90px);
+    min-height: calc(100vh - 90px); /* minus navbar height */
     padding: 45px 70px;
 }
+
+
+/* ======================
+   SUCCESS MESSAGE
+====================== */
 .success-msg {
     background: #e8fff1;
     color: #0f9d58;
@@ -18,11 +30,19 @@
     font-weight: 700;
 }
 
+
+/* ======================
+   MAIN CONTAINER
+====================== */
 .profile-dashboard {
     max-width: 1250px;
     margin: auto;
 }
 
+
+/* ======================
+   HEADER
+====================== */
 .profile-heading {
     display: flex;
     justify-content: space-between;
@@ -46,6 +66,10 @@
     color: #777;
 }
 
+
+/* ======================
+   BACK BUTTON
+====================== */
 .back-btn {
     width: 48px;
     height: 48px;
@@ -60,6 +84,10 @@
     box-shadow: 0 12px 30px rgba(255, 61, 0, 0.12);
 }
 
+
+/* ======================
+   EDIT BUTTON
+====================== */
 .edit-btn {
     border: none;
     background: #ff3d00;
@@ -71,12 +99,20 @@
     box-shadow: 0 15px 35px rgba(255, 61, 0, 0.25);
 }
 
+
+/* ======================
+   GRID LAYOUT
+====================== */
 .profile-grid {
     display: grid;
     grid-template-columns: 390px 1fr;
     gap: 32px;
 }
 
+
+/* ======================
+   CARDS (LEFT + RIGHT)
+====================== */
 .profile-hero-card,
 .profile-main-card {
     background: white;
@@ -84,17 +120,24 @@
     box-shadow: 0 25px 70px rgba(20, 20, 20, 0.08);
 }
 
+
+/* ======================
+   HERO CARD (LEFT PANEL)
+====================== */
 .profile-hero-card {
     position: relative;
     overflow: hidden;
     padding: 45px 30px;
     min-height: 620px;
     text-align: center;
+
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+
+/* Decorative header pattern */
 .hero-pattern {
     position: absolute;
     inset: 0 0 auto 0;
@@ -105,11 +148,14 @@
     border-radius: 0 0 45px 45px;
 }
 
+
+/* Avatar wrapper */
 .big-avatar {
     margin-top: 80px;
     z-index: 2;
 }
 
+/* Avatar circle */
 .avatar {
     width: 130px;
     height: 130px;
@@ -117,13 +163,20 @@
     background: white;
     color: #ff3d00;
     font-size: 60px;
-    animation: pulse 3s ease-in-out infinite;
+
     font-weight: 900;
+
     display: grid;
     place-items: center;
+
     box-shadow: 0 18px 45px rgba(255, 61, 0, 0.3);
     border: 8px solid #fff1eb;
+
+    /* Pulse animation */
+    animation: pulse 3s ease-in-out infinite;
 }
+
+/* Pulse animation */
 @keyframes pulse {
     0%, 100% {
         box-shadow: 0 18px 45px rgba(255, 61, 0, 0.3);
@@ -133,6 +186,8 @@
     }
 }
 
+
+/* Name + role */
 .profile-hero-card h2 {
     font-size: 32px;
     margin: 28px 0 8px;
@@ -144,6 +199,7 @@
     margin: 0 0 12px;
 }
 
+/* Role badge */
 .profile-hero-card span {
     background: #fff1eb;
     color: #ff3d00;
@@ -152,9 +208,14 @@
     font-weight: 900;
 }
 
+
+/* ======================
+   STATS GRID
+====================== */
 .profile-stats {
     width: 100%;
     margin-top: auto;
+
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 12px;
@@ -177,6 +238,10 @@
     font-weight: 700;
 }
 
+
+/* ======================
+   MAIN CARD (RIGHT PANEL)
+====================== */
 .profile-main-card {
     padding: 38px;
 }
@@ -186,39 +251,51 @@
     margin: 0 0 25px;
 }
 
+
+/* ======================
+   QUICK ACTIONS
+====================== */
 .quick-actions {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 18px;
 }
 
+/* Action card */
 .action-card {
     background: #fafafa;
     border-radius: 24px;
     padding: 24px;
+
     text-decoration: none;
     color: #111;
+
     display: grid;
-    font-family: inherit;
-    text-align: left;
-     width: 100%;
-    cursor: pointer;
     grid-template-columns: 58px 1fr 20px;
+
     align-items: center;
     gap: 16px;
-    transition: 0.25s ease;
+
+    width: 100%;
+    cursor: pointer;
+
     border: none;
+
+    transition: 0.25s ease;
 }
 
+/* Hover effect */
 .action-card:hover {
     transform: translateY(-4px);
     background: #fff7f2;
     border-color: #ffd4c4;
 }
+
 .action-card:hover span {
     transform: scale(1.1);
 }
 
+/* Icon */
 .action-card span {
     width: 58px;
     height: 58px;
@@ -245,14 +322,22 @@
     color: #ff3d00;
 }
 
+
+/* ======================
+   LOGOUT BUTTON
+====================== */
 .logout-btn {
     display: block;
     margin-top: 28px;
+
     background: #111;
     color: white;
+
     text-align: center;
+
     padding: 18px;
     border-radius: 999px;
+
     text-decoration: none;
     font-size: 18px;
     font-weight: 900;
@@ -261,6 +346,11 @@
 .logout-btn:hover {
     background: #ff3d00;
 }
+
+
+/* ======================
+   CARD HOVER EFFECT
+====================== */
 .profile-hero-card,
 .profile-main-card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -271,42 +361,64 @@
     transform: translateY(-6px);
     box-shadow: 0 30px 80px rgba(20, 20, 20, 0.12);
 }
+
+
+/* ======================
+   ADDRESS MODAL
+====================== */
 .address-modal {
     position: fixed;
     inset: 0;
+
     background: rgba(0,0,0,0.45);
+
     display: none;
     align-items: center;
     justify-content: center;
+
     z-index: 999;
 }
 
+/* Show modal */
 .address-modal.show {
     display: flex;
 }
 
+/* Modal card */
 .address-modal-card {
     width: 460px;
+
     background: white;
     border-radius: 28px;
+
     padding: 30px;
+
     position: relative;
+
     box-shadow: 0 30px 80px rgba(0,0,0,0.25);
 }
+
+/* Close button */
 .close-modal {
     position: absolute;
     top: 18px;
     right: 18px;
+
     border: none;
+
     background: #fff1eb;
     color: #ff3d00;
+
     width: 38px;
     height: 38px;
+
     border-radius: 50%;
+
     font-size: 24px;
     cursor: pointer;
 }
 
+/* Modal text */
 .address-modal-card h2 {
     margin: 0 0 8px;
     font-size: 28px;
@@ -317,6 +429,7 @@
     color: #777;
 }
 
+/* Form */
 .address-modal-card label {
     display: block;
     margin: 14px 0 7px;
@@ -338,18 +451,27 @@
     border-color: #ff3d00;
 }
 
+/* Submit button */
 .address-modal-card form button[type="submit"] {
     width: 100%;
     margin-top: 20px;
+
     border: none;
+
     background: #ff3d00;
     color: white;
+
     padding: 15px;
     border-radius: 999px;
+
     font-weight: 900;
     cursor: pointer;
 }
-/* Tablet */
+
+
+/* ======================
+   RESPONSIVE (TABLET)
+====================== */
 @media (max-width: 1000px) {
     .profile-page {
         padding: 35px 25px;
@@ -364,7 +486,10 @@
     }
 }
 
-/* Mobile keeps phone style */
+
+/* ======================
+   RESPONSIVE (MOBILE)
+====================== */
 @media (max-width: 650px) {
     .profile-page {
         padding: 20px 14px;

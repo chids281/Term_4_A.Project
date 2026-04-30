@@ -2,40 +2,63 @@
 <!doctype html>
 <html>
 <head>
+  <!-- Page title dynamically shows category -->
   <title>{{ category.name }} | QuickBite</title>
+
+  <!-- Main customer styles -->
   <link rel="stylesheet" href="{% static 'css/customer.css' %}?v=130">
+
+  <!-- Category-specific styles -->
   <link rel="stylesheet" href="{% static 'css/category.css' %}?v=3">
 </head>
 
 <body class="category-body">
 
+<!-- TOP NAVBAR -->
 <nav class="top-nav">
+
+  <!-- Logo -->
   <div class="logo">🍴 <span>Quick</span>Bite</div>
 
+  <!-- Navigation links -->
   <div class="nav-links">
     <a href="{% url 'customer_dashboard' %}">Home</a>
-    <a href="#">Restaurants</a>
+    <a href="#">Restaurants</a> <!-- Not linked yet -->
     <a href="{% url 'my_orders' %}">Orders</a>
     <a href="{% url 'cart' %}">My Cart</a>
     <a href="{% url 'profile' %}">Profile</a>
   </div>
 
+  <!-- User section -->
   <div class="nav-user">
     <span>🔔</span>
     <span>👤 Hi, {{ user.username }}</span>
   </div>
+
 </nav>
 
+<!-- MAIN PAGE -->
 <main class="category-page">
 
+  <!-- HERO SECTION -->
   <section class="category-hero">
+
+    <!-- Left side -->
     <div>
+      <!-- Back button -->
       <a href="{% url 'customer_dashboard' %}" class="back-btn">← Back</a>
+
+      <!-- Category name -->
       <h1>{{ category.name }}</h1>
+
+      <!-- Description -->
       <p>Explore all available meals under {{ category.name }}.</p>
     </div>
 
+    <!-- Right side icon -->
     <div class="category-icon-big">
+
+      <!-- Emoji changes based on category name -->
       {% if category.name == "Rice" %}
         🍚
       {% elif category.name == "Pasta" %}
@@ -49,39 +72,63 @@
       {% else %}
         🍽️
       {% endif %}
+
     </div>
+
   </section>
 
+  <!-- FOOD SECTION -->
   <section class="category-food-section">
+
+    <!-- Section header -->
     <div class="section-title">
       <h2>{{ category.name }} Meals</h2>
+
+      <!-- Count of dishes -->
       <p>{{ dishes.count }} item{{ dishes.count|pluralize }} found</p>
     </div>
 
     {% if dishes %}
+    <!-- GRID OF FOOD -->
     <div class="category-food-grid">
 
       {% for dish in dishes %}
       <div class="category-food-card">
 
+        <!-- Dish image -->
         {% if dish.image %}
           <img src="{{ dish.image.url }}" alt="{{ dish.name }}">
         {% else %}
+          <!-- Placeholder if no image -->
           <div class="food-placeholder">🍽️</div>
         {% endif %}
 
+        <!-- Dish details -->
         <div class="food-info">
+
+          <!-- Dish name -->
           <h3>{{ dish.name }}</h3>
+
+          <!-- Short description -->
           <p>{{ dish.description|truncatewords:12 }}</p>
 
+          <!-- Static rating + time (can improve later) -->
           <div class="food-meta">
             <span>⭐ 4.5</span>
             <span>20 mins</span>
           </div>
 
+          <!-- Bottom section -->
           <div class="food-bottom">
+
+            <!-- Price -->
             <strong>₦{{ dish.price }}</strong>
-            <a href="{% url 'dish_detail' dish.id %}" class="view-btn">View Meal</a>
+
+            <!-- View dish detail -->
+            <a href="{% url 'dish_detail' dish.id %}" class="view-btn">
+              View Meal
+            </a>
+
           </div>
         </div>
 
@@ -89,7 +136,9 @@
       {% endfor %}
 
     </div>
+
     {% else %}
+    <!-- EMPTY STATE -->
     <div class="empty-category">
       <div>🍽️</div>
       <h2>No food found</h2>
@@ -97,6 +146,7 @@
       <a href="{% url 'customer_dashboard' %}">Go Back Home</a>
     </div>
     {% endif %}
+
   </section>
 
 </main>

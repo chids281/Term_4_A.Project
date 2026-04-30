@@ -1,76 +1,122 @@
 {% extends 'adminpanel/base.html' %}
+
+<!-- Browser tab title -->
 {% block title %}Profile{% endblock %}
+
+<!-- Topbar title -->
 {% block page_title %}My Profile{% endblock %}
- 
+
 {% block content %}
+
+<!-- Two-column layout -->
 <div class="grid-2">
-    <!-- UPDATE PROFILE -->
+
+    <!-- LEFT SIDE: Update profile card -->
     <div class="card">
         <div class="card-title">Update Profile</div>
+
+        <!-- Profile update form -->
         <form method="POST">
             {% csrf_token %}
+
+            <!-- Helps the view know which form was submitted -->
             <input type="hidden" name="action" value="update_profile">
+
+            <!-- First name field -->
             <div class="form-group">
                 <label class="form-label">First Name</label>
                 <input type="text" name="first_name" class="form-control" value="{{ user.first_name }}">
             </div>
+
+            <!-- Last name field -->
             <div class="form-group">
                 <label class="form-label">Last Name</label>
                 <input type="text" name="last_name" class="form-control" value="{{ user.last_name }}">
             </div>
+
+            <!-- Email field -->
             <div class="form-group">
                 <label class="form-label">Email</label>
                 <input type="email" name="email" class="form-control" value="{{ user.email }}">
             </div>
+
+            <!-- Username is disabled because it should not be edited -->
             <div class="form-group">
                 <label class="form-label">Username</label>
                 <input type="text" class="form-control" value="{{ user.username }}" disabled>
                 <div class="form-hint">Username cannot be changed.</div>
             </div>
+
+            <!-- Submit profile updates -->
             <button type="submit" class="btn btn-primary">Save Changes</button>
         </form>
     </div>
- 
+
+
+    <!-- RIGHT SIDE: stacked cards -->
     <div class="col-stack">
-        <!-- CHANGE PASSWORD -->
+
+        <!-- Change password card -->
         <div class="card">
             <div class="card-title">Change Password</div>
+
+            <!-- Password change form -->
             <form method="POST">
                 {% csrf_token %}
+
+                <!-- Helps the view know this is password form -->
                 <input type="hidden" name="action" value="change_password">
+
+                <!-- Current password -->
                 <div class="form-group">
                     <label class="form-label">Current Password</label>
                     <input type="password" name="old_password" class="form-control" required>
                 </div>
+
+                <!-- New password -->
                 <div class="form-group">
                     <label class="form-label">New Password</label>
                     <input type="password" name="new_password" class="form-control" required>
                 </div>
+
+                <!-- Confirm new password -->
                 <div class="form-group">
                     <label class="form-label">Confirm New Password</label>
                     <input type="password" name="confirm_password" class="form-control" required>
                 </div>
+
+                <!-- Submit password change -->
                 <button type="submit" class="btn btn-dark">Change Password</button>
             </form>
         </div>
- 
-        <!-- ACCOUNT INFO -->
+
+
+        <!-- Account information card -->
         <div class="card">
             <div class="card-title">Account Info</div>
+
+            <!-- Date account was created -->
             <p style="margin-bottom:10px; font-size:0.88rem;">
                 <span style="color:var(--text-light);">Member since:</span>
                 <strong> {{ user.date_joined|date:"F d, Y" }}</strong>
             </p>
+
+            <!-- Last login date -->
             <p style="margin-bottom:10px; font-size:0.88rem;">
                 <span style="color:var(--text-light);">Last login:</span>
                 <strong> {{ user.last_login|date:"F d, Y H:i"|default:"Never" }}</strong>
             </p>
+
+            <!-- User role -->
             <p style="font-size:0.88rem;">
                 <span style="color:var(--text-light);">Role:</span>
-                <span class="badge" style="background:var(--sidebar-bg); color:white; margin-left:6px;">Administrator</span>
+                <span class="badge" style="background:var(--sidebar-bg); color:white; margin-left:6px;">
+                    Administrator
+                </span>
             </p>
         </div>
+
     </div>
 </div>
+
 {% endblock %}
- 

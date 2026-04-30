@@ -1,18 +1,31 @@
 {% extends 'adminpanel/base.html' %}
+
+<!-- Browser tab title -->
 {% block title %}Food Types{% endblock %}
+
+<!-- Topbar title -->
 {% block page_title %}Food Types{% endblock %}
- 
+
 {% block content %}
+
+<!-- Food type cards row -->
 <div style="display:flex; gap:12px; margin-bottom:24px; flex-wrap:wrap;">
+
+    <!-- Loop through food type choices from the Django view/model -->
     {% for ft in food_type_choices %}
     <div style="background:var(--white); border-radius:12px; padding:14px 22px; box-shadow:var(--shadow); font-weight:600; font-size:0.88rem; border-left:4px solid var(--coral); color:var(--text-dark);">
         {{ ft }}
     </div>
     {% endfor %}
+
 </div>
- 
+
+<!-- Dishes table card -->
 <div class="card">
+
+    <!-- Section title -->
     <div class="card-title">All Dishes</div>
+
     <table>
         <thead>
             <tr>
@@ -23,19 +36,47 @@
                 <th>Price</th>
             </tr>
         </thead>
+
         <tbody>
+
+            <!-- Loop through all dishes from Django view -->
             {% for dish in dishes %}
             <tr>
+                <!-- Row number -->
                 <td>{{ forloop.counter }}</td>
-                <td><strong>{{ dish.name }}</strong></td>
-                <td><span class="badge badge-cat">{{ dish.category.name|default:"Uncategorized" }}</span></td>
+
+                <!-- Dish name -->
+                <td>
+                    <strong>{{ dish.name }}</strong>
+                </td>
+
+                <!-- Dish category -->
+                <td>
+                    <span class="badge badge-cat">
+                        {{ dish.category.name|default:"Uncategorized" }}
+                    </span>
+                </td>
+
+                <!-- Restaurant name -->
                 <td>{{ dish.restaurant.name|default:"—" }}</td>
-                <td><strong>${{ dish.price }}</strong></td>
+
+                <!-- Dish price -->
+                <td>
+                    <strong>${{ dish.price }}</strong>
+                </td>
             </tr>
+
+            <!-- Empty state -->
             {% empty %}
-            <tr><td colspan="5" style="text-align:center; color:#aaa; padding:24px;">No dishes found.</td></tr>
+            <tr>
+                <td colspan="5" style="text-align:center; color:#aaa; padding:24px;">
+                    No dishes found.
+                </td>
+            </tr>
             {% endfor %}
+
         </tbody>
     </table>
 </div>
+
 {% endblock %}

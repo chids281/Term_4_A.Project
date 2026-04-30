@@ -2,13 +2,19 @@
 <!doctype html>
 <html>
 <head>
+  <!-- Page title -->
   <title>Help Center | QuickBite</title>
+
+  <!-- Main customer CSS -->
   <link rel="stylesheet" href="{% static 'css/customer.css' %}?v=120">
+
+  <!-- Profile sub-pages CSS -->
   <link rel="stylesheet" href="{% static 'css/profile_pages.css' %}?v=1">
 </head>
 
 <body class="profile-sub-body">
 
+<!-- TOP NAVBAR -->
 <nav class="top-nav">
   <div class="logo">🍴 <span>Quick</span>Bite</div>
 
@@ -26,34 +32,48 @@
   </div>
 </nav>
 
+<!-- MAIN PAGE CONTENT -->
 <main class="sub-page">
+
+  <!-- Main card -->
   <section class="sub-card">
+
+    <!-- Back link -->
     <a href="{% url 'profile' %}" class="back-link">← Back to Profile</a>
 
+    <!-- Page heading -->
     <div class="sub-header">
       <div>
         <h1>Help Center</h1>
         <p>Need help? Contact QuickBite support.</p>
       </div>
+
+      <!-- Header icon -->
       <span class="sub-icon">☎️</span>
     </div>
 
+    <!-- Help topics -->
     <div class="help-list">
+
+      <!-- Order support -->
       <div class="help-item">
         <h3>Order Issues</h3>
         <p>Report missing, delayed, or incorrect orders.</p>
       </div>
 
+      <!-- Payment support -->
       <div class="help-item">
         <h3>Payment Support</h3>
         <p>Get help with refunds and payment confirmation.</p>
       </div>
 
+      <!-- Contact details -->
       <div class="help-item">
         <h3>Contact Support</h3>
         <p>Email: support@quickbite.com</p>
         <p>Phone: +234 800 000 0000</p>
       </div>
+
     </div>
   </section>
 </main>

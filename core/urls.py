@@ -1,33 +1,41 @@
 """
-URL configuration for core project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/6.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+Main URL configuration for your project.
+This file connects all your apps together.
 """
+
 from django.contrib import admin
 from django.urls import path, include
+
+# Needed to serve uploaded images (media) during development
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 urlpatterns = [
+
+    # Default Django admin (NOT your custom admin panel)
+    # URL: /admin/
     path("admin/", admin.site.urls),
 
-    # + your existing app urls here
+    # Accounts app (login, signup, logout, etc.)
+    # Root URL → http://127.0.0.1:8000/
     path("", include("accounts.urls")),
+
+    # Customer dashboard and pages
+    # URL: /customer/
     path("customer/", include("customer.urls")),
+
+    # Orders system (cart, checkout, orders)
+    # URL: /orders/
     path("orders/", include("orders.urls")),
+
+    # Your custom admin panel (IMPORTANT)
+    # URL: /admin-panel/
     path("admin-panel/", include("adminpanel.urls")),
 ]
 
+
+# Serve uploaded media files (images) in development
+# Example: /media/dishes/image.jpg
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,3 +1,6 @@
+/* ======================
+   CATEGORY PAGE BODY
+====================== */
 .category-body {
   min-height: 100vh;
   background:
@@ -6,10 +9,14 @@
     linear-gradient(135deg, #fff7f2, #ffffff);
 }
 
+/* Main page spacing */
 .category-page {
   padding: 45px 70px;
 }
 
+/* ======================
+   HERO SECTION
+====================== */
 .category-hero {
   max-width: 1250px;
   margin: 0 auto 40px;
@@ -26,6 +33,7 @@
   box-shadow: 0 25px 70px rgba(255, 61, 0, 0.25);
 }
 
+/* Back button */
 .back-btn {
   display: inline-block;
   background: white;
@@ -37,16 +45,19 @@
   margin-bottom: 28px;
 }
 
+/* Category title */
 .category-hero h1 {
   font-size: 56px;
   margin-bottom: 12px;
 }
 
+/* Category subtitle */
 .category-hero p {
   font-size: 18px;
   opacity: 0.95;
 }
 
+/* Big category icon on hero */
 .category-icon-big {
   width: 150px;
   height: 150px;
@@ -57,11 +68,15 @@
   font-size: 72px;
 }
 
+/* ======================
+   FOOD SECTION
+====================== */
 .category-food-section {
   max-width: 1250px;
   margin: auto;
 }
 
+/* Section title row */
 .section-title {
   display: flex;
   justify-content: space-between;
@@ -78,12 +93,14 @@
   font-weight: 700;
 }
 
+/* Food cards grid */
 .category-food-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
 
+/* Single food card */
 .category-food-card {
   background: white;
   border-radius: 26px;
@@ -93,11 +110,13 @@
   transition: 0.25s ease;
 }
 
+/* Card hover effect */
 .category-food-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 25px 60px rgba(255, 61, 0, 0.14);
 }
 
+/* Food image and placeholder size */
 .category-food-card img,
 .food-placeholder {
   width: 100%;
@@ -105,6 +124,7 @@
   object-fit: cover;
 }
 
+/* Placeholder shown when food has no image */
 .food-placeholder {
   background: #fff1eb;
   display: grid;
@@ -112,6 +132,7 @@
   font-size: 54px;
 }
 
+/* Food text area */
 .food-info {
   padding: 20px;
 }
@@ -127,6 +148,7 @@
   min-height: 42px;
 }
 
+/* Rating / time / restaurant info row */
 .food-meta {
   display: flex;
   gap: 15px;
@@ -135,17 +157,20 @@
   margin-bottom: 18px;
 }
 
+/* Bottom row with price and button */
 .food-bottom {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
+/* Food price */
 .food-bottom strong {
   color: #ff3d00;
   font-size: 20px;
 }
 
+/* View dish button */
 .view-btn {
   background: #ff3d00;
   color: white;
@@ -160,6 +185,9 @@
   text-decoration: none;
 }
 
+/* ======================
+   EMPTY CATEGORY STATE
+====================== */
 .empty-category {
   background: white;
   border-radius: 28px;
@@ -181,6 +209,7 @@
   color: #777;
 }
 
+/* Empty category button */
 .empty-category a {
   display: inline-block;
   margin-top: 15px;
@@ -196,7 +225,7 @@
   text-decoration: none;
 }
 
-/* removes all unwanted link underlines */
+/* Removes all unwanted link underlines */
 .category-page a,
 .category-page a:hover,
 .category-page a:visited,
@@ -204,6 +233,9 @@
   text-decoration: none !important;
 }
 
+/* ======================
+   TABLET RESPONSIVE
+====================== */
 @media (max-width: 1000px) {
   .category-page {
     padding: 30px 22px;
@@ -214,6 +246,9 @@
   }
 }
 
+/* ======================
+   MOBILE RESPONSIVE
+====================== */
 @media (max-width: 650px) {
   .category-hero {
     flex-direction: column;

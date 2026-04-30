@@ -1,271 +1,347 @@
 {% load static %}
 <!doctype html>
 <html>
-  <head>
-    <title>My Orders | QuickBite</title>
-    <link rel="stylesheet" href="{% static 'css/customer.css' %}?v=111" />
-    <link rel="stylesheet" href="{% static 'css/orders.css' %}?v=111" />
-  </head>
+<head>
+  <!-- Page title -->
+  <title>My Orders | QuickBite</title>
 
-  <body class="orders-body">
-    <nav class="top-nav">
-      <div class="logo">🍴 <span>Quick</span>Bite</div>
+  <!-- Main styles -->
+  <link rel="stylesheet" href="{% static 'css/customer.css' %}?v=111" />
+  <link rel="stylesheet" href="{% static 'css/orders.css' %}?v=111" />
+</head>
 
-      <div class="nav-links">
-        <a href="{% url 'customer_dashboard' %}">Home</a>
-        <a href="#">Restaurants</a>
-        <a href="{% url 'my_orders' %}" class="active">Orders</a>
-        <a href="{% url 'cart' %}">My Cart</a>
-        <a href="{% url 'profile' %}">Profile</a>
+<body class="orders-body">
+
+<!-- ================= NAVBAR ================= -->
+<nav class="top-nav">
+
+  <!-- Logo -->
+  <div class="logo">🍴 <span>Quick</span>Bite</div>
+
+  <!-- Navigation links -->
+  <div class="nav-links">
+    <a href="{% url 'customer_dashboard' %}">Home</a>
+
+    <!-- TODO: Replace with real restaurants page -->
+    <a href="#">Restaurants</a>
+
+    <!-- Active page -->
+    <a href="{% url 'my_orders' %}" class="active">Orders</a>
+
+    <a href="{% url 'cart' %}">My Cart</a>
+    <a href="{% url 'profile' %}">Profile</a>
+  </div>
+
+  <!-- User info -->
+  <div class="nav-user">
+    <span>🔔</span>
+    <span>👤 Hi, {{ user.username }}</span>
+  </div>
+</nav>
+
+
+<!-- ================= MAIN PAGE ================= -->
+<main class="orders-track-page">
+
+  <!-- ================= LEFT SIDE (MAP TRACKING) ================= -->
+  <section class="track-map-panel">
+
+    <!-- Header -->
+    <div class="map-header">
+      <div>
+        <h1>Track Your Order</h1>
+        <p>Follow your meal from kitchen to your doorstep.</p>
       </div>
 
-      <div class="nav-user">
-        <span>🔔</span>
-        <span>👤 Hi, {{ user.username }}</span>
+      <!-- Live tracking badge -->
+      <span class="live-badge">Live Tracking</span>
+    </div>
+
+    <!-- Map container -->
+    <div class="map-box">
+
+      <!-- Background grid -->
+      <div class="map-grid"></div>
+
+      <!-- Route path -->
+      <svg class="route-svg" viewBox="0 0 800 600">
+        <path
+          id="routePath"
+          d="M200 450 L200 300 Q200 260 240 260 L400 260 Q450 260 450 220 L450 180 Q450 140 500 140 L650 140 Q700 140 700 180 L700 300"
+          class="route-path"
+        />
+      </svg>
+
+      <!-- Start (kitchen) -->
+      <div class="route-point kitchen-point">🍽️</div>
+
+      <!-- Rider (moves along path) -->
+      <div class="route-point rider-point">🛵</div>
+
+      <!-- Destination -->
+      <div class="route-point home-point">📍</div>
+    </div>
+  </section>
+
+
+  <!-- ================= RIGHT SIDE (ORDERS LIST) ================= -->
+  <section class="orders-list-panel">
+
+    <!-- Header -->
+    <div class="orders-header">
+      <h2>My Orders</h2>
+      <p>Your recent food orders</p>
+    </div>
+
+    <!-- If user has orders -->
+    {% if orders %}
+
+    {% for order in orders %}
+
+    <!-- SINGLE ORDER CARD -->
+    <div class="track-order-card" data-order-id="{{ order.id }}">
+
+      <!-- Top section -->
+      <div class="track-order-top">
+        <div>
+          <h3>Order #{{ order.id }}</h3>
+          <p>{{ order.created_at|date:"M d, Y - H:i" }}</p>
+        </div>
+
+        <!-- Order actions -->
+        <div class="order-top-actions">
+
+          <!-- Order code -->
+          <span class="order-code">#QB{{ order.id }}</span>
+
+          <!-- Delete order -->
+          <form method="POST" action="{% url 'delete_order' order.id %}">
+            {% csrf_token %}
+            <button type="submit" class="delete-order-btn">×</button>
+          </form>
+
+        </div>
       </div>
-    </nav>
 
-    <main class="orders-track-page">
-      <section class="track-map-panel">
-        <div class="map-header">
-          <div>
-            <h1>Track Your Order</h1>
-            <p>Follow your meal from kitchen to your doorstep.</p>
-          </div>
-          <span class="live-badge">Live Tracking</span>
+
+      <!-- Delivery status message -->
+      <div class="delivery-text">
+        <h2>
+
+          {% if order.status == "delivered" %}
+            Delivered successfully
+
+          {% elif order.status == "on_the_way" %}
+            Rider is heading your way
+
+          {% elif order.status == "preparing" %}
+            Preparing your meal
+
+          {% elif order.status == "confirmed" %}
+            Order accepted
+
+          {% else %}
+            Waiting for confirmation
+
+          {% endif %}
+
+        </h2>
+
+        <p>Estimated arrival: <strong>30–45 mins</strong></p>
+      </div>
+
+
+      <!-- ================= PROGRESS TRACK ================= -->
+      <div class="progress-track">
+
+        <!-- Step 1 -->
+        <div class="step active">
+          <span>✅</span>
+          <p>Accepted</p>
         </div>
 
-        <div class="map-box">
-          <div class="map-grid"></div>
-          <!-- <h2 class="map-watermark">QuickBite City</h2> -->
-
-          <svg class="route-svg" viewBox="0 0 800 600">
-            <path
-              id="routePath"
-              d="M200 450 L200 300 Q200 260 240 260 L400 260 Q450 260 450 220 L450 180 Q450 140 500 140 L650 140 Q700 140 700 180 L700 300"
-              class="route-path"
-            />
-          </svg>
-
-          <div class="route-point kitchen-point">🍽️</div>
-          <div class="route-point rider-point">🛵</div>
-          <div class="route-point home-point">📍</div>
-        </div>
-      </section>
-
-      <section class="orders-list-panel">
-        <div class="orders-header">
-          <h2>My Orders</h2>
-          <p>Your recent food orders</p>
+        <!-- Step 2 -->
+        <div class="step {% if order.status == 'preparing' or order.status == 'on_the_way' or order.status == 'delivered' %}active{% endif %}">
+          <span>🍳</span>
+          <p>Cooking</p>
         </div>
 
-        {% if orders %} {% for order in orders %}
-        <div class="track-order-card" data-order-id="{{ order.id }}">
-          <div class="track-order-top">
-            <div>
-              <h3>Order #{{ order.id }}</h3>
-              <p>{{ order.created_at|date:"M d, Y - H:i" }}</p>
-            </div>
-
-            <div class="order-top-actions">
-              <span class="order-code">#QB{{ order.id }}</span>
-
-              <form method="POST" action="{% url 'delete_order' order.id %}">
-                {% csrf_token %}
-                <button type="submit" class="delete-order-btn">×</button>
-              </form>
-            </div>
-          </div>
-
-          <div class="delivery-text">
-            <h2>
-              {% if order.status == "delivered" %} Delivered successfully {%
-              elif order.status == "on_the_way" %} Rider is heading your way {%
-              elif order.status == "preparing" %} Preparing your meal {% elif
-              order.status == "confirmed" %} Order accepted {% else %} Waiting
-              for confirmation {% endif %}
-            </h2>
-            <p>Estimated arrival: <strong>30–45 mins</strong></p>
-          </div>
-
-          <div class="progress-track">
-            <div class="step active">
-              <span>✅</span>
-              <p>Accepted</p>
-            </div>
-
-            <div
-              class="step {% if order.status == 'preparing' or order.status == 'on_the_way' or order.status == 'delivered' %}active{% endif %}"
-            >
-              <span>🍳</span>
-              <p>Cooking</p>
-            </div>
-
-            <div
-              class="step {% if order.status == 'on_the_way' or order.status == 'delivered' %}active{% endif %}"
-            >
-              <span>🛵</span>
-              <p>Pickup</p>
-            </div>
-
-            <div
-              class="step {% if order.status == 'delivered' %}active{% endif %}"
-            >
-              <span>🏁</span>
-              <p>Delivered</p>
-            </div>
-          </div>
-
-          <div class="order-items-mini">
-            {% for item in order.items.all %}
-            <div>
-              <span>{{ item.dish.name }} × {{ item.quantity }}</span>
-              <strong>₦{{ item.subtotal }}</strong>
-            </div>
-            {% endfor %}
-          </div>
-
-          <div class="rider-box">
-            <div class="rider-avatar">👨‍🍳</div>
-            <div>
-              <h4>QuickBite Rider</h4>
-              <p>Delivery partner</p>
-            </div>
-            <button type="button">📞</button>
-          </div>
-
-          <div class="track-order-bottom">
-            <span
-              class="order-status {{ order.status }}"
-              id="status-{{ order.id }}"
-            >
-              {{ order.get_status_display }}
-            </span>
-            <strong>₦{{ order.total }}</strong>
-          </div>
+        <!-- Step 3 -->
+        <div class="step {% if order.status == 'on_the_way' or order.status == 'delivered' %}active{% endif %}">
+          <span>🛵</span>
+          <p>Pickup</p>
         </div>
-        {% endfor %} {% else %}
-        <div class="empty-orders">
-          <div class="empty-icon">📦</div>
-          <h2>No orders yet</h2>
-          <p>Start ordering your favorite meals!</p>
-          <a href="{% url 'customer_dashboard' %}">Browse Food</a>
+
+        <!-- Step 4 -->
+        <div class="step {% if order.status == 'delivered' %}active{% endif %}">
+          <span>🏁</span>
+          <p>Delivered</p>
         </div>
-        {% endif %}
-      </section>
-    </main>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const orderCards = document.querySelectorAll(".track-order-card");
 
-        function updateSteps(card, status) {
-          const steps = card.querySelectorAll(".step");
+      </div>
 
-          steps.forEach((step) => step.classList.remove("active"));
 
-          steps[0].classList.add("active");
+      <!-- Order items -->
+      <div class="order-items-mini">
 
-          if (
-            status === "preparing" ||
-            status === "on_the_way" ||
-            status === "delivered"
-          ) {
-            steps[1].classList.add("active");
-          }
+        {% for item in order.items.all %}
+        <div>
+          <span>{{ item.dish.name }} × {{ item.quantity }}</span>
+          <strong>₦{{ item.subtotal }}</strong>
+        </div>
+        {% endfor %}
 
-          if (status === "on_the_way" || status === "delivered") {
-            steps[2].classList.add("active");
-          }
+      </div>
 
-          if (status === "delivered") {
-            steps[3].classList.add("active");
-          }
-        }
-        function updateRiderPosition(status) {
-          const rider = document.querySelector(".rider-point");
 
-          if (!rider) return;
+      <!-- Rider info -->
+      <div class="rider-box">
+        <div class="rider-avatar">👨‍🍳</div>
 
-          rider.classList.remove(
-            "status-confirmed",
-            "status-preparing",
-            "status-on_the_way",
-            "status-delivered",
-          );
+        <div>
+          <h4>QuickBite Rider</h4>
+          <p>Delivery partner</p>
+        </div>
 
-          rider.classList.add("moving");
+        <!-- Call button -->
+        <button type="button">📞</button>
+      </div>
 
-          setTimeout(() => {
-            rider.classList.add(`status-${status}`);
-          }, 80);
 
-          setTimeout(() => {
-            rider.classList.remove("moving");
-          }, 1300);
-        }
+      <!-- Bottom section -->
+      <div class="track-order-bottom">
 
-        function updateDeliveryText(card, status) {
-          const title = card.querySelector(".delivery-text h2");
+        <!-- Status badge -->
+        <span class="order-status {{ order.status }}" id="status-{{ order.id }}">
+          {{ order.get_status_display }}
+        </span>
 
-          if (status === "delivered") {
-            title.textContent = "Delivered successfully";
-          } else if (status === "on_the_way") {
-            title.textContent = "Rider is heading your way";
-          } else if (status === "preparing") {
-            title.textContent = "Preparing your meal";
-          } else {
-            title.textContent = "Order accepted";
-          }
-        }
-        function moveRiderAlongPath(progress) {
-          const path = document.getElementById("routePath");
-          const rider = document.querySelector(".rider-point");
+        <!-- Total price -->
+        <strong>₦{{ order.total }}</strong>
+      </div>
 
-          if (!path || !rider) return;
+    </div>
 
-          const length = path.getTotalLength();
-          const point = path.getPointAtLength(progress * length);
+    {% endfor %}
 
-          rider.style.left = point.x + "px";
-          rider.style.top = point.y + "px";
-        }
-        function updateRiderPosition(status) {
-          let progress = 0;
 
-          if (status === "confirmed") progress = 0.1;
-          else if (status === "preparing") progress = 0.4;
-          else if (status === "on_the_way") progress = 0.7;
-          else if (status === "delivered") progress = 1;
+    {% else %}
 
-          moveRiderAlongPath(progress);
-        }
+    <!-- EMPTY STATE -->
+    <div class="empty-orders">
+      <div class="empty-icon">📦</div>
+      <h2>No orders yet</h2>
+      <p>Start ordering your favorite meals!</p>
+      <a href="{% url 'customer_dashboard' %}">Browse Food</a>
+    </div>
 
-        function fetchStatus(card) {
-          const orderId = card.dataset.orderId;
+    {% endif %}
 
-          fetch(`/orders/live-status/${orderId}/`)
-            .then((response) => response.json())
-            .then((data) => {
-              const statusBadge = document.getElementById(`status-${orderId}`);
+  </section>
+</main>
 
-              statusBadge.textContent = data.status_display;
-              statusBadge.className = `order-status ${data.status}`;
 
-              updateSteps(card, data.status);
-              updateDeliveryText(card, data.status);
-              updateRiderPosition(data.status);
-            })
-            .catch((error) => console.log("Live tracking error:", error));
-        }
+<!-- ================= JAVASCRIPT ================= -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
-        orderCards.forEach((card) => {
-          fetchStatus(card);
+  // Get all order cards
+  const orderCards = document.querySelectorAll(".track-order-card");
 
-          setInterval(() => {
-            fetchStatus(card);
-          }, 5000);
-        });
+
+  // Update progress steps
+  function updateSteps(card, status) {
+    const steps = card.querySelectorAll(".step");
+
+    steps.forEach(step => step.classList.remove("active"));
+
+    steps[0].classList.add("active");
+
+    if (status === "preparing" || status === "on_the_way" || status === "delivered") {
+      steps[1].classList.add("active");
+    }
+
+    if (status === "on_the_way" || status === "delivered") {
+      steps[2].classList.add("active");
+    }
+
+    if (status === "delivered") {
+      steps[3].classList.add("active");
+    }
+  }
+
+
+  // Move rider on SVG path
+  function moveRiderAlongPath(progress) {
+    const path = document.getElementById("routePath");
+    const rider = document.querySelector(".rider-point");
+
+    if (!path || !rider) return;
+
+    const length = path.getTotalLength();
+    const point = path.getPointAtLength(progress * length);
+
+    rider.style.left = point.x + "px";
+    rider.style.top = point.y + "px";
+  }
+
+
+  // Convert status → movement
+  function updateRiderPosition(status) {
+    let progress = 0;
+
+    if (status === "confirmed") progress = 0.1;
+    else if (status === "preparing") progress = 0.4;
+    else if (status === "on_the_way") progress = 0.7;
+    else if (status === "delivered") progress = 1;
+
+    moveRiderAlongPath(progress);
+  }
+
+
+  // Update delivery text
+  function updateDeliveryText(card, status) {
+    const title = card.querySelector(".delivery-text h2");
+
+    if (status === "delivered") title.textContent = "Delivered successfully";
+    else if (status === "on_the_way") title.textContent = "Rider is heading your way";
+    else if (status === "preparing") title.textContent = "Preparing your meal";
+    else if (status === "confirmed") title.textContent = "Order accepted";
+    else title.textContent = "Waiting for confirmation";
+  }
+
+
+  // Fetch live status
+  function fetchStatus(card) {
+    const orderId = card.dataset.orderId;
+
+    fetch(`/orders/live-status/${orderId}/`)
+      .then(res => res.json())
+      .then(data => {
+
+        const badge = document.getElementById(`status-${orderId}`);
+
+        badge.textContent = data.status_display;
+        badge.className = `order-status ${data.status}`;
+
+        updateSteps(card, data.status);
+        updateDeliveryText(card, data.status);
+        updateRiderPosition(data.status);
       });
-    </script>
-  </body>
+  }
+
+
+  // Run tracking loop
+  orderCards.forEach(card => {
+    fetchStatus(card);
+
+    setInterval(() => {
+      fetchStatus(card);
+    }, 5000);
+  });
+
+});
+</script>
+
+</body>
 </html>

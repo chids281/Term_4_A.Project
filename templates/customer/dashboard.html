@@ -2,41 +2,62 @@
 <!doctype html>
 <html>
   <head>
+    <!-- Page title -->
     <title>Customer Dashboard | QuickBite</title>
+
+    <!-- Main CSS -->
     <link rel="stylesheet" href="{% static 'css/customer.css' %}?v=30" />
   </head>
 
   <body>
+
+    <!-- ================= NAVBAR ================= -->
     <nav class="top-nav">
+
+      <!-- Logo -->
       <div class="logo">🍴 <span>Quick</span>Bite</div>
 
+      <!-- Navigation links -->
       <div class="nav-links">
         <a href="{% url 'customer_dashboard' %}" class="active">Home</a>
+
+        <!-- Not linked yet -->
         <a href="#">Restaurants</a>
+
         <a href="{% url 'my_orders' %}">Orders</a>
+
+        <!-- Cart with dynamic count badge -->
         <a href="{% url 'cart' %}" class="cart-nav-link">
           My Cart
           <span id="cart-count" class="cart-badge">
             {{ cart_count|default:0 }}
           </span>
         </a>
+
         <a href="{% url 'profile' %}">Profile</a>
       </div>
 
+      <!-- User info -->
       <div class="nav-user">
         <span>🔔</span>
         <span>👤 Hi, {{ user.username }}</span>
       </div>
     </nav>
 
+    <!-- ================= MAIN LAYOUT ================= -->
     <main class="home-layout">
+
+      <!-- LEFT SIDE (MAIN CONTENT) -->
       <section class="home-content">
+
+        <!-- Welcome + search -->
         <div class="welcome-row">
           <div>
             <h1>Hey, {{ user.username }}</h1>
             <p>What would you like to eat today?</p>
           </div>
 
+          <!-- Search form -->
           <form method="GET" class="search-box">
             <input
               type="text"
@@ -48,12 +69,14 @@
           </form>
         </div>
 
+        <!-- Promo banner -->
         <section class="hero-card">
           <h2>Up to 35% off</h2>
           <p>Enjoy delicious meals from top restaurants near you.</p>
           <a href="#popular-items">Order Now</a>
         </section>
 
+        <!-- ================= CATEGORIES ================= -->
         <div class="section-heading">
           <h2>Categories</h2>
           <a href="#">See all</a>
@@ -61,7 +84,11 @@
 
         <div class="categories">
           {% for category in categories %}
+
+            <!-- Each category card -->
             <a href="{% url 'category_dishes' category.id %}" class="category-card">
+
+              <!-- Category icon (based on name) -->
               <span>
                 {% if category.name == "Rice" %}
                   🍚
@@ -78,48 +105,69 @@
                 {% endif %}
               </span>
 
+              <!-- Category name -->
               <h3>{{ category.name }}</h3>
             </a>
-            {% endfor %}
+
+          {% endfor %}
         </div>
 
+        <!-- ================= POPULAR ITEMS ================= -->
         <div class="section-heading" id="popular-items">
           <h2>Popular Items</h2>
           <a href="#">See all</a>
         </div>
 
         <div class="food-grid">
+
           {% for dish in dishes %}
           <div class="food-card">
 
+            <!-- Clickable image -->
             <a href="{% url 'dish_detail' dish.id %}" class="food-image-link">
+
               {% if dish.image %}
-              <img src="{{ dish.image.url }}" alt="{{ dish.name }}" />
+                <img src="{{ dish.image.url }}" alt="{{ dish.name }}" />
               {% else %}
-              <img src="{% static 'images/onboarding1.jpg' %}" alt="Food" />
+                <!-- fallback image -->
+                <img src="{% static 'images/onboarding1.jpg' %}" alt="Food" />
               {% endif %}
+
             </a>
 
+            <!-- Dish title -->
             <h3 class="food-title">
               <a href="{% url 'dish_detail' dish.id %}">
                 {{ dish.name }}
               </a>
             </h3>
 
+            <!-- Static rating + time -->
             <p>⭐ 4.5 · 20 mins</p>
+
+            <!-- Price -->
             <strong>₦{{ dish.price }}</strong>
 
+            <!-- Add to cart (AJAX handled below) -->
             <a href="{% url 'add_to_cart' dish.id %}" class="add-cart-btn">
               Add to Cart
             </a>
+
           </div>
+
           {% empty %}
           <div class="empty-box">No dishes found</div>
           {% endfor %}
+
         </div>
+
       </section>
 
+
+      <!-- ================= RIGHT SIDE PANEL ================= -->
       <aside class="profile-panel">
+
+        <!-- Profile card -->
         <div class="profile-card">
           <div class="avatar">👤</div>
           <h2>{{ user.username }}</h2>
@@ -127,19 +175,25 @@
           <span>{{ user.role|title }}</span>
         </div>
 
+        <!-- Quick links -->
         <div class="profile-actions">
           <a href="{% url 'profile' %}">Edit Profile</a>
           <a href="#">Change Password</a>
           <a href="{% url 'orders' %}">My Orders</a>
           <a href="{% url 'cart' %}">My Cart</a>
         </div>
+
       </aside>
+
     </main>
 
+
+    <!-- ================= AJAX ADD TO CART ================= -->
     <script>
       document.querySelectorAll(".add-cart-btn").forEach((button) => {
+
         button.addEventListener("click", function (event) {
-          event.preventDefault();
+          event.preventDefault(); // stop page reload
 
           fetch(this.href, {
             method: "GET",
@@ -149,20 +203,27 @@
           })
             .then((response) => response.json())
             .then((data) => {
+
               if (data.success) {
+
+                // Update cart count
                 const cartCount = document.getElementById("cart-count");
                 cartCount.textContent = data.cart_count;
                 cartCount.style.display = "inline-flex";
 
+                // Button feedback
                 this.textContent = "Added ✓";
 
                 setTimeout(() => {
                   this.textContent = "Add to Cart";
                 }, 1000);
               }
+
             });
         });
+
       });
     </script>
+
   </body>
 </html>

@@ -1,51 +1,70 @@
-{% load static %}
+{% load static %} <!-- Enables static files like CSS -->
+
 <!DOCTYPE html>
 <html>
 <head>
+    <!-- Page title -->
     <title>Sign Up | QuickBite</title>
+
+    <!-- Shared auth styling -->
     <link rel="stylesheet" href="{% static 'css/auth1.css' %}">
 </head>
-<body class="auth-page">
 
-<div class="auth-container">
+<body class="auth-page"> <!-- Applies background + layout -->
 
+<div class="auth-container"> <!-- Main glass card -->
+
+    <!-- LEFT SIDE (branding / intro text) -->
     <div class="auth-left">
         <h1>Create Account</h1>
-        <p>Join QuickBite and enjoy fast food delivery at your fingertips.</p>
+
+        <p>
+            Join QuickBite and enjoy fast food delivery at your fingertips.
+        </p>
     </div>
 
+    <!-- RIGHT SIDE (signup form) -->
     <div class="auth-right">
 
         <h2>Sign Up</h2>
 
+        <!-- Signup form -->
         <form method="post">
-            {% csrf_token %}
+            {% csrf_token %} <!-- Security token (required in Django forms) -->
 
+            <!-- Non-field errors (e.g. password mismatch) -->
             {{ form.non_field_errors }}
 
+            <!-- Username field -->
             <div class="form-group">
                 {{ form.username }}
             </div>
 
+            <!-- Email field -->
             <div class="form-group">
                 {{ form.email }}
             </div>
 
+            <!-- Role selection (customer / owner / admin) -->
             <div class="form-group">
                 {{ form.role }}
             </div>
 
+            <!-- Password -->
             <div class="form-group">
                 {{ form.password1 }}
             </div>
 
+            <!-- Confirm password -->
             <div class="form-group">
                 {{ form.password2 }}
             </div>
 
+            <!-- Submit button -->
             <button type="submit">Create Account</button>
         </form>
 
+        <!-- Switch to login -->
         <p class="switch-text">
             Already have an account?
             <a href="{% url 'login' %}">Login</a>
