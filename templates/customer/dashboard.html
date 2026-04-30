@@ -129,7 +129,9 @@
 
         <div class="profile-actions">
           <a href="{% url 'profile' %}">Edit Profile</a>
-          <a href="#">Change Password</a>
+          <a href="{% url 'change_password' %}" class="profile-action">
+    Change Password
+</a>
           <a href="{% url 'orders' %}">My Orders</a>
           <a href="{% url 'cart' %}">My Cart</a>
         </div>

@@ -3,6 +3,9 @@ from django.contrib.auth.decorators import login_required  # type: ignore
 from orders.models import Order
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Sum
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 from restaurant.models import Category, Dish
 from django.contrib import messages
 from orders.models import Cart
@@ -102,4 +105,24 @@ def category_dishes(request, category_id):
     return render(request, "customer/category_dishes.html", {
         "category": category,
         "dishes": dishes,
+    })
+
+@login_required
+def change_password(request):
+    if request.method == "POST":
+        form = PasswordChangeForm(request.user, request.POST)
+
+        if form.is_valid():
+            user = form.save()
+
+            # Keeps user logged in after password change
+            update_session_auth_hash (request, user)
+
+            messages.success(request, "Password changed successfully.")
+            return redirect("customer_dashboard")
+    else:
+        form = PasswordChangeForm(request.user)
+
+    return render(request, "customer/change_password.html", {
+        "form": form
     })
